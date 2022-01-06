@@ -1,41 +1,41 @@
 import { useState } from "react";
 
 import Header from "./components/Header";
-import Projects from "./components/Projects";
+import ProjectList from "./components/ProjectList";
 
 const App = () => {
-  const [projects, setProjects] = useState([
+  const [projectList, setProjects] = useState([
     {
       id: 1,
       name: "Project Nexus",
-      client_name: "Vale",
-      current_status: true,
+      clientName: "Vale",
+      currentStatus: true,
     },
     {
       id: 2,
       name: "Project Pegasus",
-      client_name: "Exxon",
-      current_status: true,
+      clientName: "Exxon",
+      currentStatus: true,
     },
     {
       id: 3,
       name: "Project Enron",
-      client_name: "Suncor",
-      current_status: false,
+      clientName: "Suncor",
+      currentStatus: false,
     },
   ]);
 
   //Delete Project
   const deleteProject = (id) => {
-    setProjects(projects.filter((project) => project.id !== id));
+    setProjects(projectList.filter((project) => project.id !== id));
   };
 
   //Toggle Reminder
   const toggleReminder = (id) => {
     setProjects(
-      projects.map((project) =>
+      projectList.map((project) =>
         project.id === id
-          ? { ...project, current_status: !project.current_status }
+          ? { ...project, currentStatus: !project.currentStatus }
           : project
       )
     );
@@ -44,9 +44,9 @@ const App = () => {
   return (
     <div className="container">
       <Header />
-      {projects.length > 0 ? (
-        <Projects
-          projects={projects}
+      {projectList.length > 0 ? (
+        <ProjectList
+          projectList={projectList}
           onDelete={deleteProject}
           onToggle={toggleReminder}
         />

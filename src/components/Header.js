@@ -1,29 +1,24 @@
-//Header component 
-//Button component imported 
+//Header component
+//Button component imported
 
-import PropTypes from 'prop-types'
-import Button from './Button'
+import PropTypes from "prop-types";
+import Button from "./Button";
 
-const Header = ( { title } ) => {
+const Header = ({ title = "Project Tracker" }) => {
+  const onClick = () => {
+    console.log("click");
+  };
 
-    const onClick = () => {
-        console.log('click')
-    }
-
-    return (
-        <header className='header'>
-          <h1>{title}</h1>  
-          <Button color='green' text ='Add' onClick={onClick} />
-        </header>
-    )
-}
-
-Header.defaultProps = {
-    title: 'Project Tracker',
-}
+  return (
+    <header className="header">
+      <h1>{title}</h1>
+      <Button color="green" text="Add" onClick={onClick} />
+    </header>
+  );
+};
 
 Header.propTypes = {
-    title: PropTypes.string.isRequired,
-}
+  title: PropTypes.string,
+};
 
-export default Header
+export default Header;
