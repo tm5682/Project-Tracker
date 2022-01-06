@@ -1,17 +1,20 @@
-//Will have all the projects
-//Getting state from global app in app.js 
+import Project from "./Project";
 
-import Project from "./Project"
+const Projects = ({ projects, onDelete, onToggle }) => {
+  return (
+    <>
+      'we are looping through the projects, outputting the project component and
+      passing the project as a prop
+      {projects.map((project) => (
+        <Project
+          key={project.id}
+          project={project}
+          onDelete={onDelete}
+          onToggle={onToggle}
+        />
+      ))}
+    </>
+  );
+};
 
-const Projects = ({ projects }) => {
-
-    
-
-    return (
-        <>
-            {projects.map(project => <Project key={project.id} project={project} /> )}    
-        </>
-    )
-}
-
-export default Projects
+export default Projects;
