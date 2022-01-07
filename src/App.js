@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import Header from "./components/Header";
 import ProjectList from "./components/ProjectList";
+import AddProject from "./components/AddProject";
 
 const App = () => {
   const [projectList, setProjects] = useState([
@@ -9,21 +10,30 @@ const App = () => {
       id: 1,
       name: "Project Nexus",
       clientName: "Vale",
-      currentStatus: true,
+      favorite: true,
     },
     {
       id: 2,
       name: "Project Pegasus",
       clientName: "Exxon",
-      currentStatus: true,
+      favorite: true,
     },
     {
       id: 3,
       name: "Project Enron",
       clientName: "Suncor",
-      currentStatus: false,
+      favorite: false,
     },
   ]);
+
+  //Add Project
+  const addProject = (project) => {
+    const id = Math.floor(Math.random() * 1000) + 1;
+
+    const newProject = { id, ...project };
+
+    setProjects([...projectList, newProject]);
+  };
 
   //Delete Project
   const deleteProject = (id) => {
@@ -31,11 +41,11 @@ const App = () => {
   };
 
   //Toggle Reminder
-  const toggleReminder = (id) => {
+  const toggleFavorie = (id) => {
     setProjects(
       projectList.map((project) =>
         project.id === id
-          ? { ...project, currentStatus: !project.currentStatus }
+          ? { ...project, favorite: !project.favorite }
           : project
       )
     );
@@ -44,11 +54,12 @@ const App = () => {
   return (
     <div className="container">
       <Header />
+      <AddProject onAdd={addProject} />
       {projectList.length > 0 ? (
         <ProjectList
           projectList={projectList}
           onDelete={deleteProject}
-          onToggle={toggleReminder}
+          onToggle={toggleFavorie}
         />
       ) : (
         "No Project to Show."

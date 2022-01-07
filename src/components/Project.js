@@ -5,7 +5,7 @@ const Project = ({ project, onDelete, onToggle }) => {
   return (
     <div
       //if current status true then use reminder css class else project class
-      className={`project ${project.currentStatus ? "reminder" : ""}`}
+      className={`project ${project.favorite ? "reminder" : ""}`}
       onDoubleClick={() => onToggle(project.id)}
     >
       <br />
