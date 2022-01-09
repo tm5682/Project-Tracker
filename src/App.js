@@ -4,6 +4,8 @@ import Header from "./components/Header";
 import ProjectList from "./components/ProjectList";
 import AddProject from "./components/AddProject";
 
+import Create from "./components/Create";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const App = () => {
@@ -83,7 +85,7 @@ const App = () => {
           }
         />
 
-        <Route path="/notes" element={<div>Hi</div>} />
+        <Route path="/create" element={<Create />} />
       </Routes>
     </Router>
   );
