@@ -4,7 +4,11 @@ import Header from "./components/Header";
 import ProjectList from "./components/ProjectList";
 import AddProject from "./components/AddProject";
 
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 const App = () => {
+  const [showAddProject, setShowAddProject] = useState(false);
+
   const [projectList, setProjects] = useState([
     {
       id: 1,
@@ -41,7 +45,7 @@ const App = () => {
   };
 
   //Toggle Reminder
-  const toggleFavorie = (id) => {
+  const toggleFavorite = (id) => {
     setProjects(
       projectList.map((project) =>
         project.id === id
@@ -51,20 +55,37 @@ const App = () => {
     );
   };
 
+  //v6 routers
   return (
-    <div className="container">
-      <Header />
-      <AddProject onAdd={addProject} />
-      {projectList.length > 0 ? (
-        <ProjectList
-          projectList={projectList}
-          onDelete={deleteProject}
-          onToggle={toggleFavorie}
+    <Router>
+      <Routes>
+        <Route
+          exact
+          path="/"
+          element={
+            <div className="container">
+              <Header
+                onAdd={() => setShowAddProject(!showAddProject)}
+                showAdd={showAddProject}
+              />
+
+              {showAddProject && <AddProject onAdd={addProject} />}
+              {projectList.length > 0 ? (
+                <ProjectList
+                  projectList={projectList}
+                  onDelete={deleteProject}
+                  onToggle={toggleFavorite}
+                />
+              ) : (
+                "No Project to Show."
+              )}
+            </div>
+          }
         />
-      ) : (
-        "No Project to Show."
-      )}
-    </div>
+
+        <Route path="/notes" element={<div>Hi</div>} />
+      </Routes>
+    </Router>
   );
 };
 
