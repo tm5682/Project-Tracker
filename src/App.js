@@ -8,6 +8,19 @@ import Create from "./components/Create";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import { createTheme, ThemeProvider } from "@mui/material";
+import { purple } from "@mui/material/colors";
+
+//custom theme using MUI theme
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#fefefe",
+    },
+    secondary: purple,
+  },
+});
+
 const App = () => {
   const [showAddProject, setShowAddProject] = useState(false);
 
@@ -59,35 +72,37 @@ const App = () => {
 
   //v6 routers
   return (
-    <Router>
-      <Routes>
-        <Route
-          exact
-          path="/"
-          element={
-            <div className="container">
-              <Header
-                onAdd={() => setShowAddProject(!showAddProject)}
-                showAdd={showAddProject}
-              />
-
-              {showAddProject && <AddProject onAdd={addProject} />}
-              {projectList.length > 0 ? (
-                <ProjectList
-                  projectList={projectList}
-                  onDelete={deleteProject}
-                  onToggle={toggleFavorite}
+    <ThemeProvider theme={theme}>
+      <Router>
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <div className="container">
+                <Header
+                  onAdd={() => setShowAddProject(!showAddProject)}
+                  showAdd={showAddProject}
                 />
-              ) : (
-                "No Project to Show."
-              )}
-            </div>
-          }
-        />
 
-        <Route path="/create" element={<Create />} />
-      </Routes>
-    </Router>
+                {showAddProject && <AddProject onAdd={addProject} />}
+                {projectList.length > 0 ? (
+                  <ProjectList
+                    projectList={projectList}
+                    onDelete={deleteProject}
+                    onToggle={toggleFavorite}
+                  />
+                ) : (
+                  "No Project to Show."
+                )}
+              </div>
+            }
+          />
+
+          <Route path="/create" element={<Create />} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 };
 
