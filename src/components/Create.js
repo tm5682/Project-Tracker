@@ -5,11 +5,19 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 /* import { ButtonGroup } from "@mui/material"; */
 
-import { Container } from "@mui/material";
+import { Container, FormControlLabel } from "@mui/material";
 
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 import { TextField } from "@mui/material";
+
+import { Radio } from "@mui/material";
+
+import { RadioGroup } from "@mui/material";
+
+import { FormControl } from "@mui/material";
+
+import { FormLabel } from "@mui/material";
 
 const buttonStyle = {};
 const title = {
@@ -26,8 +34,24 @@ function Create() {
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
 
+  const [titleError, setTitleError] = useState(false);
+  const [detailsError, setDetailsError] = useState(false);
+
+  const [category, setCategory] = useState("issues");
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    setTitleError(false);
+    setDetailsError(false);
+
+    if (title == "") {
+      setTitleError(true);
+    }
+
+    if (details == "") {
+      setDetailsError(true);
+    }
 
     if (title && details) {
       console.log(title, details);
@@ -54,6 +78,7 @@ function Create() {
           color="secondary"
           fullWidth
           required
+          error={titleError}
         />
 
         <TextField
@@ -66,10 +91,36 @@ function Create() {
           rows={4}
           fullWidth
           required
+          error={detailsError}
         />
 
+        <FormControl sx={{ ...field }}>
+          <FormLabel>Note Category</FormLabel>
+          <RadioGroup
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <FormControlLabel
+              control={<Radio color="secondary" />}
+              value="issues"
+              label="Issues"
+            />
+            <FormControlLabel
+              control={<Radio color="secondary" />}
+              value="financial notes"
+              label="Financial Notes"
+            />
+
+            <FormControlLabel
+              control={<Radio color="secondary" />}
+              value="contract notes"
+              label="Contract Notes"
+            />
+          </RadioGroup>
+        </FormControl>
+
         <Button
-          sx={{ ...buttonStyle }}
+          sx={{ ...buttonStyle, mt: 3 }}
           type="submit"
           color="primary"
           variant="contained"

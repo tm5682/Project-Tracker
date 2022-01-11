@@ -8,7 +8,7 @@ import Create from "./components/Create";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import { createTheme, ThemeProvider } from "@mui/material";
+import { Container, createTheme, ThemeProvider } from "@mui/material";
 import { purple } from "@mui/material/colors";
 
 //custom theme using MUI theme
@@ -79,23 +79,26 @@ const App = () => {
             exact
             path="/"
             element={
-              <div className="container">
-                <Header
-                  onAdd={() => setShowAddProject(!showAddProject)}
-                  showAdd={showAddProject}
-                />
-
-                {showAddProject && <AddProject onAdd={addProject} />}
-                {projectList.length > 0 ? (
-                  <ProjectList
-                    projectList={projectList}
-                    onDelete={deleteProject}
-                    onToggle={toggleFavorite}
+              <Container>
+                <div>
+                  <Header
+                    onAdd={() => setShowAddProject(!showAddProject)}
+                    showAdd={showAddProject}
                   />
-                ) : (
-                  "No Project to Show."
-                )}
-              </div>
+
+                  {showAddProject && <AddProject onAdd={addProject} />}
+
+                  {projectList.length > 0 ? (
+                    <ProjectList
+                      projectList={projectList}
+                      onDelete={deleteProject}
+                      onToggle={toggleFavorite}
+                    />
+                  ) : (
+                    "No Project to Show."
+                  )}
+                </div>
+              </Container>
             }
           />
 
