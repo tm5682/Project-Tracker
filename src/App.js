@@ -5,6 +5,7 @@ import ProjectList from "./components/ProjectList";
 import AddProject from "./components/AddProject";
 
 import Create from "./components/Create";
+import Notes from "./components/Notes";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -103,6 +104,8 @@ const App = () => {
           />
 
           <Route path="/create" element={<Create />} />
+
+          <Route path="/notes" element={<Notes />} />
         </Routes>
       </Router>
     </ThemeProvider>

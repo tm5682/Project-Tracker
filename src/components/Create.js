@@ -19,6 +19,8 @@ import { FormControl } from "@mui/material";
 
 import { FormLabel } from "@mui/material";
 
+import { useNavigate } from "react-router-dom";
+
 const buttonStyle = {};
 const title = {
   textDecoration: "underline",
@@ -31,6 +33,7 @@ const field = {
 };
 
 function Create() {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
 
@@ -54,7 +57,11 @@ function Create() {
     }
 
     if (title && details) {
-      console.log(title, details);
+      fetch("http://localhost:8000/notes", {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({ title, details, category }),
+      }).then(() => navigate("/notes"));
     }
   };
 
