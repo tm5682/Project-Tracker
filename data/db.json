@@ -24,5 +24,26 @@
       "category": "issues",
       "id": 4
     }
+  ],
+
+  "projectList": [
+    {
+      "id": 1,
+      "name": "Project Nexus",
+      "clientName": "Vale",
+      "actionList": true
+    },
+    {
+      "id": 2,
+      "name": "Project Pegasus",
+      "clientName": "Vale",
+      "actionList": true
+    },
+    {
+      "id": 3,
+      "name": "Project Enron",
+      "clientName": "Huskey",
+      "actionList": true
+    }
   ]
 }

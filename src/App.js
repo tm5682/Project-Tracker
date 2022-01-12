@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Header from "./components/Header";
 import ProjectList from "./components/ProjectList";
@@ -24,27 +24,24 @@ import { purple } from "@mui/material/colors";
 
 const App = () => {
   const [showAddProject, setShowAddProject] = useState(false);
+  const [projectList, setProjects] = useState([]);
 
-  const [projectList, setProjects] = useState([
-    {
-      id: 1,
-      name: "Project Nexus",
-      clientName: "Vale",
-      actionList: true,
-    },
-    {
-      id: 2,
-      name: "Project Pegasus",
-      clientName: "Exxon",
-      actionList: false,
-    },
-    {
-      id: 3,
-      name: "Project Enron",
-      clientName: "Suncor",
-      actionList: false,
-    },
-  ]);
+  //useEffect
+  useEffect(() => {
+    const getProjects = async () => {
+      const projectsFromServer = await fetchProjects();
+      setProjects(projectsFromServer);
+    };
+    getProjects();
+  }, []);
+
+  //Fetch project data
+  const fetchProjects = async () => {
+    const res = await fetch("http://localhost:8000/projectlist");
+    const data = await res.json();
+
+    return data;
+  };
 
   //Add Project
   const addProject = (project) => {
