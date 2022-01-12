@@ -1,19 +1,19 @@
 {
   "notes": [
     {
-      "title": "Engine issue 1",
+      "title": "Engine leak",
       "details": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here",
       "category": "issues",
       "id": 1
     },
     {
-      "title": "Financial Notes",
+      "title": "Money Owed Month of December",
       "details": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here",
       "category": "financial notes",
       "id": 2
     },
     {
-      "title": "Contractual Notes",
+      "title": "Milestone 1 Details",
       "details": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here",
       "category": "contract notes",
       "id": 3

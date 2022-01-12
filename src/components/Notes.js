@@ -4,6 +4,8 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 
+import CardNote from "./CardNote";
+
 function Notes() {
   const [notes, setNotes] = useState([]);
 
@@ -13,12 +15,21 @@ function Notes() {
       .then((data) => setNotes(data));
   }, []);
 
+  const handleDelete = async (id) => {
+    await fetch("http://localhost:8000/notes/" + id, {
+      method: "DELETE",
+    });
+
+    const newNotes = notes.filter((note) => note.id != id);
+    setNotes(newNotes);
+  };
+
   return (
     <Container>
-      <Grid container>
+      <Grid container spacing={3}>
         {notes.map((note) => (
           <Grid item key={note.id} xs={12} md={6} lg={4}>
-            <Paper>{note.title}</Paper>
+            <CardNote note={note} handleDelete={handleDelete} />
           </Grid>
         ))}
       </Grid>
