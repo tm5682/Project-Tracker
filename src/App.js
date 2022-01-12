@@ -30,7 +30,7 @@ const App = () => {
       id: 1,
       name: "Project Nexus",
       clientName: "Vale",
-      actionList: false,
+      actionList: true,
     },
     {
       id: 2,
@@ -42,7 +42,7 @@ const App = () => {
       id: 3,
       name: "Project Enron",
       clientName: "Suncor",
-      actionList: true,
+      actionList: false,
     },
   ]);
 

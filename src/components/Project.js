@@ -46,9 +46,8 @@ const Project = ({ project, onDelete, onToggle }) => {
       <Box display="flex" flexDirection="column">
         <Card>
           <CardHeader
-            onClick={() => onToggle(project.id)}
             avatar={
-              <Avatar>
+              <Avatar onClick={() => onToggle(project.id)}>
                 <ExpandMoreIcon />
               </Avatar>
             }
@@ -60,14 +59,12 @@ const Project = ({ project, onDelete, onToggle }) => {
             }
             title={
               <Typography variant="h6" color="Primary">
-                {" "}
-                {project.name}{" "}
+                {project.name}
               </Typography>
             }
             subheader={
               <Typography variant="h12" color="textSecondary">
-                {" "}
-                {project.clientName}{" "}
+                {project.clientName}
               </Typography>
             }
           />
