@@ -30,7 +30,7 @@
       "id": 1,
       "name": "Project Nexus",
       "clientName": "Vale",
-      "actionList": true
+      "actionList": false
     },
     {
       "id": 2,
@@ -43,6 +43,18 @@
       "name": "Project Enron",
       "clientName": "Huskey",
       "actionList": false
+    },
+    {
+      "name": "Project Aragon",
+      "clientName": "Oceanex",
+      "actionList": false,
+      "id": 4
+    },
+    {
+      "name": "Project Matrix",
+      "clientName": "BDO",
+      "actionList": false,
+      "id": 5
     }
   ]
 }
