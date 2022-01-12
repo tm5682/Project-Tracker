@@ -30,19 +30,19 @@ const App = () => {
       id: 1,
       name: "Project Nexus",
       clientName: "Vale",
-      favorite: true,
+      actionList: false,
     },
     {
       id: 2,
       name: "Project Pegasus",
       clientName: "Exxon",
-      favorite: true,
+      actionList: false,
     },
     {
       id: 3,
       name: "Project Enron",
       clientName: "Suncor",
-      favorite: false,
+      actionList: true,
     },
   ]);
 
@@ -61,11 +61,11 @@ const App = () => {
   };
 
   //Toggle Reminder
-  const toggleFavorite = (id) => {
+  const toggleProjectActionList = (id) => {
     setProjects(
       projectList.map((project) =>
         project.id === id
-          ? { ...project, favorite: !project.favorite }
+          ? { ...project, actionList: !project.actionList }
           : project
       )
     );
@@ -93,7 +93,7 @@ const App = () => {
                     <ProjectList
                       projectList={projectList}
                       onDelete={deleteProject}
-                      onToggle={toggleFavorite}
+                      onToggle={toggleProjectActionList}
                     />
                   ) : (
                     "No Project to Show."

@@ -3,7 +3,7 @@ import { useState } from "react";
 function AddProject({ onAdd }) {
   const [name, setName] = useState("");
   const [client, setClient] = useState("");
-  const [favorite, setFavorite] = useState(false);
+  const [actionList, setActionList] = useState(false);
 
   //onSubmit
   const onSubmit = (e) => {
@@ -15,11 +15,11 @@ function AddProject({ onAdd }) {
       return;
     }
 
-    onAdd({ name, client, favorite });
+    onAdd({ name, client, actionList });
 
     setName("");
     setClient("");
-    setFavorite(false);
+    setActionList(false);
   };
 
   return (
@@ -48,8 +48,8 @@ function AddProject({ onAdd }) {
         <label>Set as Favorite</label>
         <input
           type="checkbox"
-          value={favorite}
-          onChange={(e) => setFavorite(e.currentTarget.checked)}
+          value={actionList}
+          onChange={(e) => setActionList(e.currentTarget.checked)}
         />
       </div>
 
