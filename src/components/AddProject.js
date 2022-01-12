@@ -2,7 +2,7 @@ import { useState } from "react";
 
 function AddProject({ onAdd }) {
   const [name, setName] = useState("");
-  const [client, setClient] = useState("");
+  const [clientName, setClientName] = useState("");
   const [actionList, setActionList] = useState(false);
 
   //onSubmit
@@ -15,10 +15,10 @@ function AddProject({ onAdd }) {
       return;
     }
 
-    onAdd({ name, client, actionList });
+    onAdd({ name, clientName, actionList });
 
     setName("");
-    setClient("");
+    setClientName("");
     setActionList(false);
   };
 
@@ -39,8 +39,8 @@ function AddProject({ onAdd }) {
         <input
           type="text"
           placeholder="Add Client Name"
-          value={client}
-          onChange={(e) => setClient(e.target.value)}
+          value={clientName}
+          onChange={(e) => setClientName(e.target.value)}
         />
       </div>
 

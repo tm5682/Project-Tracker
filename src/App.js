@@ -44,16 +44,32 @@ const App = () => {
   };
 
   //Add Project
-  const addProject = (project) => {
-    const id = Math.floor(Math.random() * 1000) + 1;
+  //const addProject = (name, clientName, actionList) => {
+  // const id = Math.floor(Math.random() * 1000) + 1;
 
-    const newProject = { id, ...project };
+  // const newProject = { id, ...project };
 
-    setProjects([...projectList, newProject]);
+  // setProjects([...projectList, newProject]);
+
+  const addProject = async (project) => {
+    const res = await fetch("http://localhost:8000/projectList", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(project),
+    });
+
+    const data = await res.json();
+    setProjects([...projectList, data]);
   };
 
   //Delete Project
-  const deleteProject = (id) => {
+  const deleteProject = async (id) => {
+    await fetch("http://localhost:8000/projectList/" + id, {
+      method: "DELETE",
+    });
+
     setProjects(projectList.filter((project) => project.id !== id));
   };
 
