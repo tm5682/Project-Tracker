@@ -8,20 +8,18 @@ import Typography from "@mui/material/Typography";
 
 import { Container } from "@mui/material";
 
-const Header = ({ title = "Project Tracker", onAdd, showAdd }) => {
+const Header = ({ title = "Add New Project", onAdd, showAdd }) => {
   return (
-    <Container sx={{ mt: 5 }}>
-      <header className="header">
-        <Typography variant="h4" color={"Secondary"} gutterBottom>
-          {title}
-        </Typography>
+    <Container sx={{ mt: 5, mb: 5, display: "flex", boxShadow: 1 }}>
+      <Typography variant="h6" color={"Primary"} gutterBottom>
+        {title}
+      </Typography>
 
-        <AddButton
-          color={showAdd ? "red" : "green"}
-          text={showAdd ? "Close" : "Add"}
-          onClick={onAdd}
-        />
-      </header>
+      <AddButton
+        color={showAdd ? "secondary" : "primary"}
+        text={showAdd ? "Close" : "Add"}
+        onClick={onAdd}
+      />
     </Container>
   );
 };

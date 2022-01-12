@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import Button from "@mui/material/Button";
 
-const AddButton = ({ color = "steelblue", text, onClick }) => {
+const AddButton = ({ color = "primary", text, onClick }) => {
   return (
     <Button
       onClick={onClick}

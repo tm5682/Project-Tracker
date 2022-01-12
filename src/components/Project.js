@@ -16,6 +16,9 @@ import Avatar from "@mui/material/Avatar";
 
 import ProjectActionList from "./ProjectActionList";
 
+import Grid from "@mui/material/Grid";
+import Container from "@mui/material/Container";
+
 const Project = ({ project, onDelete, onToggle }) => {
   return (
     // <div
@@ -55,11 +58,35 @@ const Project = ({ project, onDelete, onToggle }) => {
                 <DeleteOutlined />
               </IconButton>
             }
-            title={project.name}
-            subheader={project.clientName}
+            title={
+              <Typography variant="h6" color="Primary">
+                {" "}
+                {project.name}{" "}
+              </Typography>
+            }
+            subheader={
+              <Typography variant="h12" color="textSecondary">
+                {" "}
+                {project.clientName}{" "}
+              </Typography>
+            }
           />
 
           <CardContent>
+            <Grid container spacing={1} sx={{ flexDirection: "column" }}>
+              <Grid item>
+                <Typography variant="h8">Project Status: Ongoing</Typography>
+              </Grid>
+
+              <Grid item>
+                <Typography variant="h8">Users: 12</Typography>
+              </Grid>
+
+              <Grid item>
+                <Typography variant="h8">Duration: 12 months </Typography>
+              </Grid>
+            </Grid>
+
             {project.actionList && <ProjectActionList />}
           </CardContent>
         </Card>
