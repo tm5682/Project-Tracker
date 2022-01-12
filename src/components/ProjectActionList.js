@@ -13,11 +13,11 @@ function ProjectActionList() {
       <Grid container spacing={3}>
         <Grid item>
           <Button href="/notes" sx={{ mt: 3 }}>
-            <NoteIcon size="small" sx={{ mr: 1 }} /> Notes
+            <NoteIcon size="small" sx={{ mr: 1 }} /> Issues
           </Button>
 
           <Button href="/create" sx={{ ml: 5, mt: 3 }}>
-            <NoteAddIcon size="small" sx={{ mr: 1 }} /> Add Note
+            <NoteAddIcon size="small" sx={{ mr: 1 }} /> Add Issue
           </Button>
         </Grid>
       </Grid>

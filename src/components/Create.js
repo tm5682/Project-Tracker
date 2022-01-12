@@ -73,7 +73,7 @@ function Create() {
         color={"textSecondary"}
         gutterBottom
       >
-        Create a New Note
+        Create a New Issue
       </Typography>
 
       <form noValidate autoComplete="off" onSubmit={handleSubmit}>
