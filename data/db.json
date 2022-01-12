@@ -36,13 +36,13 @@
       "id": 2,
       "name": "Project Pegasus",
       "clientName": "Vale",
-      "actionList": true
+      "actionList": false
     },
     {
       "id": 3,
       "name": "Project Enron",
       "clientName": "Huskey",
-      "actionList": true
+      "actionList": false
     }
   ]
 }
