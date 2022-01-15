@@ -57,11 +57,11 @@ function Create() {
     }
 
     if (title && details) {
-      fetch("http://localhost:8000/notes", {
+      fetch("http://localhost:8000/issues", {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({ title, details, category }),
-      }).then(() => navigate("/notes"));
+      }).then(() => navigate("/issues"));
     }
   };
 
@@ -102,7 +102,7 @@ function Create() {
         />
 
         <FormControl sx={{ ...field }}>
-          <FormLabel>Note Category</FormLabel>
+          <FormLabel>Issue Type</FormLabel>
           <RadioGroup
             value={category}
             onChange={(e) => setCategory(e.target.value)}

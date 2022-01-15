@@ -10,14 +10,14 @@ import { Box } from "@mui/system";
 
 import CardActions from "@mui/material/CardActions";
 
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
 import Avatar from "@mui/material/Avatar";
 
 import ProjectActionList from "./ProjectActionList";
 
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
+
+import AddIcon from "@mui/icons-material/Add";
 
 const Project = ({ project, onDelete, onToggle }) => {
   return (
@@ -47,8 +47,11 @@ const Project = ({ project, onDelete, onToggle }) => {
         <Card>
           <CardHeader
             avatar={
-              <Avatar onClick={() => onToggle(project.id)}>
-                <ExpandMoreIcon />
+              <Avatar
+                onClick={() => onToggle(project.id)}
+                sx={{ backgroundColor: "white" }}
+              >
+                <AddIcon color="primary" />
               </Avatar>
             }
             key={project.id}

@@ -4,7 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import { IconButton, Typography } from "@mui/material";
 import DeleteOutlined from "@mui/icons-material/DeleteOutlined";
 
-function CardNote({ note: { id, title, details, category }, handleDelete }) {
+function CardNote({ issue: { id, title, details, category }, handleDelete }) {
   return (
     <div>
       <Card>

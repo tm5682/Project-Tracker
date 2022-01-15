@@ -5,12 +5,13 @@ import ProjectList from "./components/ProjectList";
 import AddProject from "./components/AddProject";
 
 import Create from "./components/Create";
-import Notes from "./components/Notes";
+import Issues from "./components/Issues";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { Container, createTheme, ThemeProvider } from "@mui/material";
 import { purple } from "@mui/material/colors";
+import Layout from "./components/Layout";
 
 //custom theme using MUI theme
 // const theme = createTheme({
@@ -88,38 +89,40 @@ const App = () => {
   return (
     //<ThemeProvider theme={theme}>
     <Router>
-      <Routes>
-        <Route
-          exact
-          path="/"
-          element={
-            <Container>
-              <div>
-                <Header
-                  onAdd={() => setShowAddProject(!showAddProject)}
-                  showAdd={showAddProject}
-                />
-
-                {showAddProject && <AddProject onAdd={addProject} />}
-
-                {projectList.length > 0 ? (
-                  <ProjectList
-                    projectList={projectList}
-                    onDelete={deleteProject}
-                    onToggle={toggleProjectActionList}
+      <Layout>
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <Container>
+                <div>
+                  <Header
+                    onAdd={() => setShowAddProject(!showAddProject)}
+                    showAdd={showAddProject}
                   />
-                ) : (
-                  "No Project to Show."
-                )}
-              </div>
-            </Container>
-          }
-        />
 
-        <Route path="/create" element={<Create />} />
+                  {showAddProject && <AddProject onAdd={addProject} />}
 
-        <Route path="/notes" element={<Notes />} />
-      </Routes>
+                  {projectList.length > 0 ? (
+                    <ProjectList
+                      projectList={projectList}
+                      onDelete={deleteProject}
+                      onToggle={toggleProjectActionList}
+                    />
+                  ) : (
+                    "No Project to Show."
+                  )}
+                </div>
+              </Container>
+            }
+          />
+
+          <Route path="/create" element={<Create />} />
+
+          <Route path="/issues" element={<Issues />} />
+        </Routes>
+      </Layout>
     </Router>
     //</ThemeProvider>
   );
