@@ -4,10 +4,18 @@ import CardContent from "@mui/material/CardContent";
 import { IconButton, Typography } from "@mui/material";
 import DeleteOutlined from "@mui/icons-material/DeleteOutlined";
 
+const CardBorder = {
+  border: "1px solid red",
+};
+
 function CardNote({ issue: { id, title, details, category }, handleDelete }) {
   return (
     <div>
-      <Card>
+      <Card
+        sx={{
+          ...(category == "issues" ? CardBorder : null),
+        }}
+      >
         <CardHeader
           action={
             <IconButton onClick={() => handleDelete(id)}>

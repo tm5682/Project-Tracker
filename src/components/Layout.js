@@ -1,17 +1,12 @@
-import { autocompleteClasses, Typography } from "@mui/material";
+import { autocompleteClasses, Typography, useTheme } from "@mui/material";
 import { Drawer } from "@mui/material";
-import { typography } from "@mui/system";
+import { Box, typography } from "@mui/system";
 
 import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 
 import HomeIcon from "@mui/icons-material/Home";
 import AddTaskIcon from "@mui/icons-material/AddTask";
 import { useLocation, useNavigate } from "react-router-dom";
-
-// const page = {
-//   backgroundColor: "f9f9f9",
-//   width: "100%",
-// };
 
 const drawerWidth = 240;
 
@@ -53,7 +48,12 @@ function Layout({ children }) {
         anchor="left"
       >
         <div>
-          <Typography variant="h5">Side Drawer</Typography>
+          <Typography
+            variant="h5"
+            sx={{ padding: (theme) => theme.spacing(3) }}
+          >
+            Project Tracker
+          </Typography>
         </div>
 
         {/* list/links */}
@@ -74,7 +74,17 @@ function Layout({ children }) {
           ))}
         </List>
       </Drawer>
-      <div style={{ background: "f9f9f9", width: "100%" }}>{children}</div>;
+      <Box
+        /* sx and styled properties can access theme, here we are multiplying 3 with default 8px spacing by mui */
+        sx={{
+          padding: (theme) => theme.spacing(3),
+          backgroundColor: "f9f9f9",
+          width: "100%",
+        }}
+      >
+        {children}
+      </Box>
+      ;
     </div>
   );
 }

@@ -49,7 +49,14 @@ const Project = ({ project, onDelete, onToggle }) => {
             avatar={
               <Avatar
                 onClick={() => onToggle(project.id)}
-                sx={{ backgroundColor: "white" }}
+                sx={{
+                  "&:hover": {
+                    color: "white",
+                    backgroundColor: "purple",
+                  },
+
+                  backgroundColor: "white",
+                }}
               >
                 <AddIcon color="primary" />
               </Avatar>
