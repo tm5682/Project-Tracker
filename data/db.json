@@ -27,12 +27,6 @@
   ],
   "projectList": [
     {
-      "id": 1,
-      "name": "Project Nexus",
-      "clientName": "Vale",
-      "actionList": false
-    },
-    {
       "id": 2,
       "name": "Project Pegasus",
       "clientName": "Vale",

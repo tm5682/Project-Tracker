@@ -10,7 +10,7 @@ import { Container } from "@mui/material";
 
 const Header = ({ title = "Add New Project", onAdd, showAdd }) => {
   return (
-    <Container sx={{ mt: 5, mb: 5, display: "flex", boxShadow: 1 }}>
+    <Container sx={{ padding: 3, display: "flex", boxShadow: 0 }}>
       <Typography variant="h6" color={"Primary"} gutterBottom>
         {title}
       </Typography>

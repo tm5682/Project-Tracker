@@ -1,3 +1,5 @@
+import * as React from "react";
+
 import { autocompleteClasses, Typography, useTheme } from "@mui/material";
 import { Drawer } from "@mui/material";
 import { Box, typography } from "@mui/system";
@@ -8,11 +10,19 @@ import HomeIcon from "@mui/icons-material/Home";
 import AddTaskIcon from "@mui/icons-material/AddTask";
 import { useLocation, useNavigate } from "react-router-dom";
 
+import { styled } from "@mui/material/styles";
+
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+
 const drawerWidth = 240;
 
 const activeMenuColor = {
   background: "#f4f4f4",
 };
+
+/* using styled method from mui we create a custom component which inherits toolbar's height and other attriutes so content goes below appbar */
+//const appBarHeightAdjuster = styled("box")(({ theme }) => theme.mixins.toolbar);
 
 function Layout({ children }) {
   const navigate = useNavigate();
@@ -31,9 +41,23 @@ function Layout({ children }) {
     },
   ];
 
+  /* MUI styled method is used to create custom component which will be used to justify contents after appbar so contents dont get hien or overwritten by appbar */
+  const AppBarHeightAdjust = styled("div")(({ theme }) => ({
+    ...theme.mixins.toolbar,
+  }));
+
   return (
     <div style={{ display: "flex" }}>
       {/*app bar */}
+      <AppBar
+        sx={{
+          width: `calc(100% - ${drawerWidth}px )`,
+        }}
+      >
+        <Toolbar>
+          <Typography>dsdsds</Typography>
+        </Toolbar>
+      </AppBar>
       {/*side drawer*/}
       <Drawer
         sx={{
@@ -82,6 +106,8 @@ function Layout({ children }) {
           width: "100%",
         }}
       >
+        {/* This is used to justify space after appBar so contents dont get hidden or overwritten on */}
+        <AppBarHeightAdjust />
         {children}
       </Box>
       ;

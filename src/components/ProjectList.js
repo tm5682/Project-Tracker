@@ -11,7 +11,7 @@ const ProjectList = ({ projectList, onDelete, onToggle }) => {
     //   onDelete={onDelete}
     //   onToggle={onToggle}
     // />
-    <Container sx={{ boxShadow: 1 }}>
+    <Container sx={{ boxShadow: 0 }}>
       <Grid container spacing={3}>
         {projectList.map((project) => (
           <Grid item key={project.id} sm={4}>
