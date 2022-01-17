@@ -4,6 +4,8 @@
 
 - npm install (install dependencies)
 
+- install json-server
+
 - npm start (to run the server)
 
 - json-server --watch data/db.json --port 8000 (run this command to start json-server at port 8000, it is used as mock server to persist data)

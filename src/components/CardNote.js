@@ -12,6 +12,7 @@ function CardNote({ issue: { id, title, details, category }, handleDelete }) {
   return (
     <div>
       <Card
+        elevation={1}
         sx={{
           ...(category == "issues" ? CardBorder : null),
         }}

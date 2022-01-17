@@ -52,7 +52,7 @@ const Project = ({ project, onDelete, onToggle }) => {
                 sx={{
                   "&:hover": {
                     color: "white",
-                    backgroundColor: "purple",
+                    bgcolor: "purple",
                   },
 
                   backgroundColor: "white",

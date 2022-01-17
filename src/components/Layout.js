@@ -1,6 +1,11 @@
 import * as React from "react";
 
-import { autocompleteClasses, Typography, useTheme } from "@mui/material";
+import {
+  autocompleteClasses,
+  TextField,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { Drawer } from "@mui/material";
 import { Box, typography } from "@mui/system";
 
@@ -14,6 +19,26 @@ import { styled } from "@mui/material/styles";
 
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
+
+import { format } from "date-fns";
+
+import { Avatar } from "@mui/material";
+
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
+import SearchIcon from "@mui/icons-material/Search";
+
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import SettingsIcon from "@mui/icons-material/Settings";
+import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
+
+//Add Project
+//const addProject = (name, clientName, actionList) => {
+// const id = Math.floor(Math.random() * 1000) + 1;
+
+// const newProject = { id, ...project };
+
+// setProjects([...projectList, newProject]);
 
 const drawerWidth = 240;
 
@@ -31,12 +56,12 @@ function Layout({ children }) {
   const menuItems = [
     {
       text: "Home",
-      icon: <HomeIcon color="secondary" />,
+      icon: <HomeIcon color="primary" />,
       path: "/",
     },
     {
       text: "Issues",
-      icon: <AddTaskIcon color="secondary" />,
+      icon: <AddTaskIcon color="primary" />,
       path: "/issues",
     },
   ];
@@ -50,12 +75,44 @@ function Layout({ children }) {
     <div style={{ display: "flex" }}>
       {/*app bar */}
       <AppBar
+        color="secondary"
+        elevation={0}
         sx={{
           width: `calc(100% - ${drawerWidth}px )`,
         }}
       >
         <Toolbar>
-          <Typography>dsdsds</Typography>
+          {/* <Toolbar>
+          <Typography sx={{ flexGrow: 1 }}>
+            {" "}
+            Today is the {format(new Date(), "do MMMM Y")}{" "}
+          </Typography> */}
+
+          {/* search bar  */}
+
+          <Box sx={{ display: "flex", flex: 1, alignItems: "center" }}>
+            <SearchIcon sx={{ mr: 1 }} />
+            <TextField
+              id="outlined-basic"
+              label="Search"
+              variant="outlined"
+              size="small"
+            />
+            <ExpandMoreIcon sx={{ ml: 1 }} />
+          </Box>
+
+          {/* right hand side settings icon on appBar */}
+          <Box
+            sx={{ display: "flex", alignItems: "center", mr: -2, padding: 1 }}
+          >
+            <HelpOutlineIcon sx={{ p: 1 }} />
+            <SettingsIcon sx={{ p: 1 }} />
+            <AppsRoundedIcon sx={{ p: 1 }} />
+            <Avatar
+              sx={{ p: 1, width: 35, height: 30 }}
+              src={process.env.PUBLIC_URL + "/userpic2.jpg"}
+            />
+          </Box>
         </Toolbar>
       </AppBar>
       {/*side drawer*/}
@@ -71,14 +128,18 @@ function Layout({ children }) {
         variant="permanent"
         anchor="left"
       >
-        <div>
+        <Box sx={{ display: "flex" }}>
+          <Avatar
+            sx={{ mt: 2.5, ml: 2 }}
+            src={process.env.PUBLIC_URL + "/brandLogo.png"}
+          />
           <Typography
             variant="h5"
             sx={{ padding: (theme) => theme.spacing(3) }}
           >
-            Project Tracker
+            Pennecon
           </Typography>
-        </div>
+        </Box>
 
         {/* list/links */}
         <List>
