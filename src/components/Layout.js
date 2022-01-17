@@ -38,6 +38,12 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 
 import { useState } from "react";
 
+import AddToDriveIcon from "@mui/icons-material/AddToDrive";
+
+import ShareIcon from "@mui/icons-material/Share";
+
+import FolderSharedIcon from "@mui/icons-material/FolderShared";
+
 //Add Project
 //const addProject = (name, clientName, actionList) => {
 // const id = Math.floor(Math.random() * 1000) + 1;
@@ -162,13 +168,18 @@ function Layout({ children }) {
       path: "/document",
       items: [
         {
-          text: "My Drive",
-          icon: <ArticleIcon color="secondary" />,
+          text: "Project Files",
+          icon: <AddToDriveIcon />,
           path: "/document",
         },
         {
-          text: "Computers",
-          icon: <ArticleIcon color="secondary" />,
+          text: "Shared with Me",
+          icon: <FolderSharedIcon />,
+          path: "/issues",
+        },
+        {
+          text: "Shared with Others",
+          icon: <ShareIcon />,
           path: "/issues",
         },
       ],
