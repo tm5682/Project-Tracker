@@ -2,6 +2,7 @@ import * as React from "react";
 
 import {
   autocompleteClasses,
+  Collapse,
   TextField,
   Typography,
   useTheme,
@@ -33,6 +34,9 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
 
 import ArticleIcon from "@mui/icons-material/Article";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+
+import { useState } from "react";
 
 //Add Project
 //const addProject = (name, clientName, actionList) => {
@@ -55,21 +59,137 @@ function Layout({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const menuItems = [
+  //this is used to keep the state of the dynamic multi level collapsible menus and sub-menus
+  const [open, setOpen] = useState(false);
+
+  //this function will be used to render menu those have single layer on side drawer
+  const SingleLevel = ({ item }) => {
+    return (
+      <ListItem
+        button
+        /* using useLocation hook we compare to see in which path we are in, if it matches use activeMenuColor class css */
+        sx={{
+          ...(location.pathname == item.path ? activeMenuColor : null),
+          my: 1,
+        }}
+        //Here onClick activates new route but also sets open's state to true so that when we refresh collapsible menus dont collapse back
+        onClick={(e) => navigate(item.path) && setOpen(true)}
+      >
+        <ListItemIcon>{item.icon}</ListItemIcon>
+        <ListItemText primary={item.text} />
+      </ListItem>
+    );
+  };
+
+  //this function will render menus with multiple layer on side drawer for example document page
+  const MultiLevel = ({ item }) => {
+    const { items: children } = item;
+
+    function handleClick() {
+      //changing state of open
+      setOpen((prev) => !prev);
+    }
+
+    return (
+      <React.Fragment>
+        <ListItem
+          button
+          onClick={() => {
+            handleClick();
+          }}
+          /* using useLocation hook we compare to see in which path we are in, if it matches use activeMenuColor class css */
+          sx={{
+            ...(location.pathname == item.path ? activeMenuColor : null),
+            my: 1,
+          }}
+        >
+          <ListItemIcon>{item.icon}</ListItemIcon>
+          <ListItemText primary={item.text} />
+          {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+        </ListItem>
+        <Collapse in={open} timeout="auto" unmountOnExit={false}>
+          <List component="div" disablePadding sx={{ ml: 2, my: 1 }}>
+            {children.map((child, key) => (
+              <MenuItem key={key} item={child} />
+            ))}
+          </List>
+        </Collapse>
+      </React.Fragment>
+    );
+  };
+
+  //this function determines if menu has children
+  function hasChildren(item) {
+    const { items: children } = item;
+
+    if (children === undefined) {
+      return false;
+    }
+
+    if (children.constructor !== Array) {
+      return false;
+    }
+
+    if (children.length === 0) {
+      return false;
+    }
+
+    return true;
+  }
+
+  //this function abstracts the menu
+  const MenuItem = ({ item }) => {
+    const Component = hasChildren(item) ? MultiLevel : SingleLevel;
+    return <Component item={item} />;
+  };
+
+  const menuList = [
     {
       text: "Home",
       icon: <HomeIcon color="secondary" />,
       path: "/",
+      items: [],
     },
     {
       text: "Issues",
       icon: <AddTaskIcon color="secondary" />,
       path: "/issues",
+      items: [],
     },
     {
       text: "Documents",
       icon: <ArticleIcon color="secondary" />,
       path: "/document",
+      items: [
+        {
+          text: "My Drive",
+          icon: <ArticleIcon color="secondary" />,
+          path: "/document",
+        },
+        {
+          text: "Computers",
+          icon: <ArticleIcon color="secondary" />,
+          path: "/issues",
+        },
+      ],
+    },
+    {
+      text: "Planning",
+      icon: <AddTaskIcon color="secondary" />,
+      path: "/planning",
+      items: [],
+    },
+    {
+      text: "Collaboration",
+      icon: <AddTaskIcon color="secondary" />,
+      path: "/collaboration",
+      items: [],
+    },
+    {
+      text: "Dashboard",
+      icon: <AddTaskIcon color="secondary" />,
+      path: "/dashboard",
+      items: [],
     },
   ];
 
@@ -149,29 +269,9 @@ function Layout({ children }) {
         </Box>
 
         {/* list/links */}
-        <List>
-          {menuItems.map((item) => (
-            <ListItem
-              key={item.text}
-              button
-              onClick={() => navigate(item.path)}
-              /* using useLocation hook we compare to see in which path we are in, if it matches use activeMenuColor class css */
-              sx={{
-                ...(location.pathname == item.path ? activeMenuColor : null),
-              }}
-            >
-              {/* if location is document page then we show document sub menus */}
-              {location.pathname == "/document" ? (
-                <Box sx={{ display: "block" }}>
-                  <AddTaskIcon color="secondary" />
-                  <AddTaskIcon color="secondary" />
-                </Box>
-              ) : null}
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItem>
-          ))}
-        </List>
+        {menuList.map((item, key) => (
+          <MenuItem key={key} item={item} />
+        ))}
       </Drawer>
       <Box
         /* sx and styled properties can access theme, here we are multiplying 3 with default 8px spacing by mui */
