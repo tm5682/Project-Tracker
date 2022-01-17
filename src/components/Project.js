@@ -58,7 +58,7 @@ const Project = ({ project, onDelete, onToggle }) => {
                   backgroundColor: "white",
                 }}
               >
-                <AddIcon color="primary" />
+                <AddIcon color="secondary" />
               </Avatar>
             }
             key={project.id}

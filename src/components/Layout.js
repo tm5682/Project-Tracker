@@ -32,6 +32,8 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
 
+import ArticleIcon from "@mui/icons-material/Article";
+
 //Add Project
 //const addProject = (name, clientName, actionList) => {
 // const id = Math.floor(Math.random() * 1000) + 1;
@@ -56,13 +58,18 @@ function Layout({ children }) {
   const menuItems = [
     {
       text: "Home",
-      icon: <HomeIcon color="primary" />,
+      icon: <HomeIcon color="secondary" />,
       path: "/",
     },
     {
       text: "Issues",
-      icon: <AddTaskIcon color="primary" />,
+      icon: <AddTaskIcon color="secondary" />,
       path: "/issues",
+    },
+    {
+      text: "Documents",
+      icon: <ArticleIcon color="secondary" />,
+      path: "/document",
     },
   ];
 
@@ -153,6 +160,13 @@ function Layout({ children }) {
                 ...(location.pathname == item.path ? activeMenuColor : null),
               }}
             >
+              {/* if location is document page then we show document sub menus */}
+              {location.pathname == "/document" ? (
+                <Box sx={{ display: "block" }}>
+                  <AddTaskIcon color="secondary" />
+                  <AddTaskIcon color="secondary" />
+                </Box>
+              ) : null}
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />
             </ListItem>
