@@ -13,6 +13,8 @@ import { Container, createTheme, ThemeProvider } from "@mui/material";
 import { purple } from "@mui/material/colors";
 import Layout from "./components/Layout";
 
+import DocumentPage from "./components/documentControl/DocumentPage";
+
 //custom theme using MUI theme
 // const theme = createTheme({
 //   palette: {
@@ -121,6 +123,8 @@ const App = () => {
           <Route path="/create" element={<Create />} />
 
           <Route path="/issues" element={<Issues />} />
+
+          <Route path="/document" element={<DocumentPage />} />
         </Routes>
       </Layout>
     </Router>

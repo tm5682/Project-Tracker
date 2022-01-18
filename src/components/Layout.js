@@ -175,12 +175,12 @@ function Layout({ children }) {
         {
           text: "Shared with Me",
           icon: <FolderSharedIcon />,
-          path: "/issues",
+          path: "/document",
         },
         {
           text: "Shared with Others",
           icon: <ShareIcon />,
-          path: "/issues",
+          path: "/document",
         },
       ],
     },
