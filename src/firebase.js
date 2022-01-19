@@ -1,14 +1,17 @@
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-import "firebase/compat/firestore";
+//import firebase from "firebase/app";
 
-import "firebase/compat/firestore";
-
-// Import the functions you need from the SDKs you need
+// Import the functions we need from the SDKs we need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 
-import { getStorage } from "firebase/storage";
+import { getFirestore } from "firebase/firestore";
+
+// import { getAuth } from "firebase/auth";
+
+// import { GoogleAuthProvider } from "firebase/auth";
+
+// //import { getAnalytics } from "firebase/analytics";
+
+// import { getStorage, ref } from "firebase/storage";
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -20,17 +23,13 @@ const firebaseConfig = {
   appId: "1:126622347061:web:c44829b57625acbd8a667c",
   measurementId: "G-4FFNS3WHPN",
 };
+
 // Initialize Firebase
-const firebaseApp = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-const analytics = getAnalytics(firebaseApp);
+//represents db connection
+const db = getFirestore(app);
 
-const auth = firebase.auth();
+//getDocs to get data
 
-const provider = new firebase.auth.GoogleAuthProvider();
-
-const storage = getStorage(firebaseApp);
-
-const db = firebaseApp.firestore();
-
-export { auth, provider, db, storage };
+export { db };

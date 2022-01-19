@@ -5,8 +5,6 @@ import { Box } from "@mui/system";
 
 import { Modal, Typography } from "@mui/material";
 
-import firebase from "firebase/compat/app";
-
 //these functions represent css that will be used within add file component
 
 const addFile = {
@@ -32,10 +30,7 @@ const addFileContainer = {
 const paper = {
   position: "absolute",
   width: 400,
-  backgroundColor: (theme) => theme.palette.background.paper,
   border: "2px solid #000",
-  boxShadow: (theme) => theme.shadows[5],
-  padding: (theme) => theme.spacing(2, 4, 3),
 };
 
 //function for modal
@@ -53,12 +48,57 @@ function AddFile() {
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
 
+  //functions for modal
+  const modalOpen = () => {
+    setOpen(true);
+  };
+
+  const modalClose = () => {
+    setOpen(false);
+  };
+
+  const modalChange = (e) => {
+    if (e.target.files[0]) {
+      setFile(e.target.files[0]);
+    }
+  };
+
+  const modalUpload = () => {};
+
   return (
     <Box sx={{ ...addFile }}>
-      <Box sx={{ ...addFileContainer }}>
+      <Box sx={{ ...addFileContainer }} onClick={modalOpen}>
         <AddIcon sx={{ mr: 1 }} />
         <Typography> New File </Typography>
       </Box>
+
+      {/* modal for uploading file */}
+      <Modal
+        open={open}
+        onClose={modalClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <Box
+          style={modalStyle}
+          sx={{
+            ...paper,
+            backgroundColor: "secondary",
+            boxShadow: 5,
+            padding: 5,
+          }}
+        >
+          <Typography>Select files you want to upload!</Typography>
+          {uploading ? (
+            <Typography>Uploading...</Typography>
+          ) : (
+            <>
+              <input type="file" onChange={modalChange} />
+              <button onClick={modalUpload}>Upload</button>
+            </>
+          )}
+        </Box>
+      </Modal>
     </Box>
   );
 }

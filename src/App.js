@@ -15,6 +15,9 @@ import Layout from "./components/Layout";
 
 import DocumentPage from "./components/documentControl/DocumentPage";
 
+import { db } from "./firebase";
+import { collection, getDocs } from "firebase/firestore";
+
 //custom theme using MUI theme
 // const theme = createTheme({
 //   palette: {
@@ -29,7 +32,7 @@ const App = () => {
   const [showAddProject, setShowAddProject] = useState(false);
   const [projectList, setProjects] = useState([]);
 
-  //useEffect
+  //useEffect - we use this to fetch data beforehand and populate state
   useEffect(() => {
     const getProjects = async () => {
       const projectsFromServer = await fetchProjects();
@@ -38,12 +41,21 @@ const App = () => {
     getProjects();
   }, []);
 
-  //Fetch project data
+  //Fetch project data - calls firebase store and
   const fetchProjects = async () => {
-    const res = await fetch("http://localhost:8000/projectlist");
-    const data = await res.json();
-
-    return data;
+    let projectListObjects = [];
+    const colRef = collection(db, "projectList");
+    await getDocs(colRef)
+      .then((snapshot) => {
+        snapshot.docs.forEach((doc) => {
+          projectListObjects.push({ ...doc.data(), id: doc.id });
+        });
+      })
+      //error catch
+      .catch((err) => {
+        console.log(err.message);
+      });
+    return projectListObjects;
   };
 
   //Add Project
