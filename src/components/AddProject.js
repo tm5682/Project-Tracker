@@ -5,6 +5,20 @@ function AddProject({ onAdd }) {
   const [clientName, setClientName] = useState("");
   const [actionList, setActionList] = useState(false);
 
+  const [status, setStatus] = useState("Ongoing");
+
+  //today's date - we use it as default for project start date if no date is passed
+  const timeElapsed = Date.now();
+  const today = new Date(timeElapsed);
+
+  const [startDate, setStartDate] = useState(today.toLocaleDateString());
+
+  const [estimatedEndDate, setEstimatedEndDate] = useState("");
+
+  const [estimatedBudget, setEstimatedBudget] = useState("");
+
+  const [currentTotalCost, setCurrentTotalCost] = useState("");
+
   //onSubmit
   const onSubmit = (e) => {
     e.preventDefault();
@@ -15,11 +29,31 @@ function AddProject({ onAdd }) {
       return;
     }
 
-    onAdd({ name, clientName, actionList });
+    //temp values
+    let finalBudget = null;
+    let actualEndDate = null;
+
+    onAdd({
+      name,
+      clientName,
+      actionList,
+      status,
+      startDate,
+      estimatedEndDate,
+      estimatedBudget,
+      currentTotalCost,
+      finalBudget,
+      actualEndDate,
+    });
 
     setName("");
     setClientName("");
     setActionList(false);
+    setStatus("");
+    setStartDate(today.toLocaleDateString());
+    setEstimatedEndDate("");
+    setEstimatedBudget("");
+    setCurrentTotalCost("");
   };
 
   return (
@@ -44,12 +78,54 @@ function AddProject({ onAdd }) {
         />
       </div>
 
-      <div className="form-control form-control-check">
-        <label>Set as Favorite</label>
+      <div className="form-control">
+        <label>Project Status</label>
         <input
-          type="checkbox"
-          value={actionList}
-          onChange={(e) => setActionList(e.currentTarget.checked)}
+          type="text"
+          placeholder="Ongoing, On Hold, Completed"
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+        />
+      </div>
+
+      <div className="form-control">
+        <label>Project Start Date </label>
+        <input
+          type="date"
+          placeholder="Project Start Date"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
+      </div>
+
+      <div className="form-control">
+        <label>Estimated Project Completion Date </label>
+        <input
+          type="date"
+          placeholder="Project End Date"
+          value={estimatedEndDate}
+          onChange={(e) => setEstimatedEndDate(e.target.value)}
+        />
+      </div>
+
+      <div className="form-control">
+        <label>Estimated Project Budget</label>${" "}
+        <input
+          type="number"
+          placeholder="Estimated initial project budget"
+          value={estimatedBudget}
+          onChange={(e) => setEstimatedBudget(e.target.value)}
+        />
+      </div>
+
+      <div className="form-control">
+        <label>Expenses incurred so far</label>
+        $
+        <input
+          type="number"
+          placeholder="Costs alredy spent on project"
+          value={currentTotalCost}
+          onChange={(e) => setCurrentTotalCost(e.target.value)}
         />
       </div>
 

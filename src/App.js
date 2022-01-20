@@ -16,7 +16,15 @@ import Layout from "./components/Layout";
 import DocumentPage from "./components/documentControl/DocumentPage";
 
 import { db } from "./firebase";
-import { collection, getDocs } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  setDoc,
+  doc,
+  Timestamp,
+} from "firebase/firestore";
+
+import cuid from "cuid";
 
 //custom theme using MUI theme
 // const theme = createTheme({
@@ -41,11 +49,13 @@ const App = () => {
     getProjects();
   }, []);
 
+  //collection reference for firebase connection to projectList
+  const collectionRef = collection(db, "projectList");
+
   //Fetch project data - calls firebase store and
   const fetchProjects = async () => {
     let projectListObjects = [];
-    const colRef = collection(db, "projectList");
-    await getDocs(colRef)
+    await getDocs(collectionRef)
       .then((snapshot) => {
         snapshot.docs.forEach((doc) => {
           projectListObjects.push({ ...doc.data(), id: doc.id });
@@ -58,7 +68,7 @@ const App = () => {
     return projectListObjects;
   };
 
-  //Add Project
+  //Add Project with just state
   //const addProject = (name, clientName, actionList) => {
   // const id = Math.floor(Math.random() * 1000) + 1;
 
@@ -66,17 +76,56 @@ const App = () => {
 
   // setProjects([...projectList, newProject]);
 
-  const addProject = async (project) => {
-    const res = await fetch("http://localhost:8000/projectList", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(project),
-    });
+  //add project with json server
+  // const addProject = async (project) => {
+  //   const res = await fetch("http://localhost:8000/projectList", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-type": "application/json",
+  //     },
+  //     body: JSON.stringify(project),
+  //   });
 
-    const data = await res.json();
-    setProjects([...projectList, data]);
+  //   const data = await res.json();
+  //   setProjects([...projectList, data]);
+  // };
+
+  //add project with firebase installed and setup
+  //we destructure the prop before adding
+  const addProject = async ({
+    name,
+    clientName,
+    actionList,
+    status,
+    startDate,
+    estimatedEndDate,
+    estimatedBudget,
+    currentTotalCost,
+    finalBudget,
+    actualEndDate,
+  }) => {
+    //unique id for the project
+    const newProjectId = cuid();
+
+    //mapping new project data to be added
+    const newProjectData = {
+      _id: newProjectId,
+      name: name,
+      clientName: clientName,
+      actionList: actionList,
+      status: status,
+      startDate: startDate,
+      estimatedEndDate: estimatedEndDate,
+      actualEndDate: actualEndDate || null,
+      estimatedBudget: estimatedBudget,
+      finalBudget: finalBudget || null,
+      currentTotalCost: currentTotalCost,
+    };
+
+    await setDoc(doc(db, "projectList", newProjectId), newProjectData);
+
+    //we are updating the state with the newly added project values
+    setProjects([...projectList, newProjectData]);
   };
 
   //Delete Project
