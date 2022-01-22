@@ -21,6 +21,23 @@ import { FormLabel } from "@mui/material";
 
 import { useNavigate } from "react-router-dom";
 
+import Grid from "@mui/material/Grid";
+
+import Chip from "@mui/material/Chip";
+import Autocomplete from "@mui/material/Autocomplete";
+
+import { db } from "../firebase";
+import {
+  collection,
+  getDocs,
+  setDoc,
+  doc,
+  deleteDoc,
+  Timestamp,
+} from "firebase/firestore";
+
+import cuid from "cuid";
+
 const buttonStyle = {};
 const title = {
   textDecoration: "underline",
@@ -34,13 +51,23 @@ const field = {
 
 function Create() {
   const navigate = useNavigate();
+
+  //issue name
+  //Issue severity (high medium low)
+  //Issue Tags
+  //Issue Description
+  //
+
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
 
   const [titleError, setTitleError] = useState(false);
   const [detailsError, setDetailsError] = useState(false);
 
-  const [category, setCategory] = useState("issues");
+  const [severity, setSeverity] = useState("Low");
+
+  //to hold the issue tags
+  const [issueTags, setIssueTags] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -60,9 +87,23 @@ function Create() {
       fetch("http://localhost:8000/issues", {
         method: "POST",
         headers: { "Content-type": "application/json" },
-        body: JSON.stringify({ title, details, category }),
+        body: JSON.stringify({ title, details, severity, issueTags }),
       }).then(() => navigate("/issues"));
     }
+  };
+
+  //adds to issue tag state
+  const onIssueTagChange = (event) => {
+    let newIssueTag = event.target.value;
+
+    console.log("NEW ISSUE TAG", newIssueTag);
+
+    setIssueTags((params) => [...params, newIssueTag]);
+  };
+
+  const foo = (option) => {
+    console.log(option);
+    setIssueTags((params) => [...params, option]);
   };
 
   return (
@@ -80,7 +121,7 @@ function Create() {
         <TextField
           onChange={(e) => setTitle(e.target.value)}
           sx={{ ...field }}
-          label="Note Title"
+          label="Issue Name"
           variant="outlined"
           color="secondary"
           fullWidth
@@ -91,7 +132,7 @@ function Create() {
         <TextField
           onChange={(e) => setDetails(e.target.value)}
           sx={{ ...field }}
-          label="Details"
+          label="Briefly describe the issue"
           variant="outlined"
           color="secondary"
           multiline
@@ -101,30 +142,73 @@ function Create() {
           error={detailsError}
         />
 
-        <FormControl sx={{ ...field }}>
-          <FormLabel>Issue Type</FormLabel>
-          <RadioGroup
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <FormControlLabel
-              control={<Radio color="secondary" />}
-              value="issues"
-              label="Issues"
-            />
-            <FormControlLabel
-              control={<Radio color="secondary" />}
-              value="financial notes"
-              label="Financial Notes"
-            />
+        {/* Grid container to split horizontal space;;first one for severity radio buttons */}
 
-            <FormControlLabel
-              control={<Radio color="secondary" />}
-              value="contract notes"
-              label="Contract Notes"
-            />
-          </RadioGroup>
-        </FormControl>
+        <Grid container spacing={3}>
+          <Grid item sm={6}>
+            <FormControl sx={{ ...field }}>
+              <FormLabel>Issue Severity</FormLabel>
+              <RadioGroup
+                value={severity}
+                onChange={(e) => setSeverity(e.target.value)}
+              >
+                <FormControlLabel
+                  control={<Radio color="secondary" />}
+                  value="High"
+                  label="High"
+                />
+                <FormControlLabel
+                  control={<Radio color="secondary" />}
+                  value="Medium"
+                  label="Medium"
+                />
+
+                <FormControlLabel
+                  control={<Radio color="secondary" />}
+                  value="Low"
+                  label="Low"
+                />
+              </RadioGroup>
+            </FormControl>
+          </Grid>
+
+          {/* tags */}
+          <Grid item sm={6}>
+            <FormControl sx={{ ...field }}>
+              {/* MUI Tags */}
+
+              <Autocomplete
+                multiple
+                id="tags-filled"
+                options={tagOptions}
+                freeSolo
+                renderTags={(value, getTagProps) =>
+                  value.map((option, index) => {
+                    // foo(option);
+
+                    return (
+                      <Chip
+                        variant="outlined"
+                        label={option}
+                        onChange={onIssueTagChange}
+                        {...getTagProps({ index })}
+                      />
+                    );
+                  })
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="filled"
+                    label="Issue Tags"
+                    placeholder="Issue Tags"
+                  />
+                )}
+                onChange={onIssueTagChange}
+              />
+            </FormControl>
+          </Grid>
+        </Grid>
 
         <Button
           sx={{ ...buttonStyle, mt: 3 }}
@@ -143,6 +227,8 @@ function Create() {
     </Container>
   );
 }
+
+const tagOptions = ["galley", "abc"];
 
 export default Create;
 

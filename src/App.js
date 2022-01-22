@@ -21,6 +21,7 @@ import {
   getDocs,
   setDoc,
   doc,
+  deleteDoc,
   Timestamp,
 } from "firebase/firestore";
 
@@ -109,7 +110,7 @@ const App = () => {
 
     //mapping new project data to be added
     const newProjectData = {
-      _id: newProjectId,
+      id: newProjectId,
       name: name,
       clientName: clientName,
       actionList: actionList,
@@ -128,12 +129,20 @@ const App = () => {
     setProjects([...projectList, newProjectData]);
   };
 
-  //Delete Project
-  const deleteProject = async (id) => {
-    await fetch("http://localhost:8000/projectList/" + id, {
-      method: "DELETE",
-    });
+  //Delete Project with json server
+  // const deleteProject = async (id) => {
+  //   await fetch("http://localhost:8000/projectList/" + id, {
+  //     method: "DELETE",
+  //   });
 
+  //   setProjects(projectList.filter((project) => project.id !== id));
+  // };
+
+  //Delete Project with firebase
+  const deleteProject = async (id) => {
+    await deleteDoc(doc(db, "projectList", id));
+
+    //update state
     setProjects(projectList.filter((project) => project.id !== id));
   };
 
