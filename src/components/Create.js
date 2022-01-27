@@ -150,17 +150,16 @@ function Create() {
         color={"textSecondary"}
         gutterBottom
       >
-        Create a New Issue
+        Create a Work Order
       </Typography>
 
       <form noValidate autoComplete="off" onSubmit={handleSubmit}>
         <TextField
           onChange={(e) => setTitle(e.target.value)}
           sx={{ ...field }}
-          label="Issue Name"
+          label="Work Order Name"
           variant="outlined"
           color="secondary"
-          fullWidth
           required
           error={titleError}
         />
@@ -168,11 +167,10 @@ function Create() {
         <TextField
           onChange={(e) => setDetails(e.target.value)}
           sx={{ ...field }}
-          label="Briefly describe the issue"
+          label="Asset"
           variant="outlined"
           color="secondary"
           multiline
-          rows={4}
           fullWidth
           required
           error={detailsError}
