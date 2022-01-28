@@ -97,7 +97,7 @@ function CheckListForm() {
             onChange={onSelectedAssets}
             multiple
             id="tags-filled"
-            options={selectedAssets}
+            options={assetOptions}
             freeSolo
             renderTags={(value, getTagProps) =>
               value.map((option, index) => {
@@ -116,8 +116,8 @@ function CheckListForm() {
               <TextField
                 {...params}
                 variant="filled"
-                label="Select Assets"
-                placeholder="Select Assets"
+                label="Select Asset"
+                placeholder="Select Asset"
               />
             )}
           />
@@ -167,7 +167,7 @@ function CheckListForm() {
             <TableBody>
               {checkListObjects.map((checklist) => (
                 <TableRow
-                  key={checklist.checkListTask}
+                  key={checklist.newId}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
@@ -189,5 +189,75 @@ function CheckListForm() {
     </Box>
   );
 }
+
+//for now keeping the assset options to select for labels
+const assetOptions = [
+  "galley",
+  "cleaning",
+  "sea water cooling pipework",
+  "starboard generator",
+  "Micro-commander",
+  "UPS",
+  "Generator",
+  "Main Engine",
+  "Propulsion",
+  "steering",
+  "crane",
+  "bow thruster",
+  "haul",
+  "rudder",
+  "stern frame",
+  "Tank soundings",
+  "Fuel tank #3 PORT",
+  "Engine Room",
+  "Dishwasher",
+  "Public Address System",
+  "windlass",
+  "Navigation Lights",
+  "Fuses",
+  "A-Frame",
+  "hydraulic",
+  "Radar",
+  "Magnetron",
+  "Wiper Seal",
+  "hydraulic cylinder",
+  "telephone",
+  "convection oven",
+  "dry store",
+  "SKF Coupling",
+  "Intermediate shaft",
+  "docking",
+  "Assessment",
+  "Repair",
+  "HQ",
+  "Hull",
+  "Silva",
+  "Labour",
+  "Parts",
+  "Piping",
+  "electronic",
+  "Electrical",
+  "KS",
+  "Mechanical",
+  "operations",
+  "Trim Tabs",
+  "Certificate",
+  "Inspection",
+  "harness",
+  "lanyard",
+  "Striker",
+  "Survey",
+  "Fire Detection",
+  "Fire safety",
+  "Life Saving",
+  "Safety",
+  "Lift",
+  "LIfting Gear",
+  "Davits",
+  "hauler",
+  "davit",
+  "Rigging",
+  "Report",
+];
 
 export default CheckListForm;

@@ -156,46 +156,31 @@ function Layout({ children }) {
       path: "/",
       items: [],
     },
+
     {
-      text: "Issues",
-      icon: <AddTaskIcon color="secondary" />,
-      path: "/issues",
-      items: [],
-    },
-    {
-      text: "Documents",
+      text: "Project Page",
       icon: <ArticleIcon color="secondary" />,
-      path: "/document",
+      path: "/issues",
       items: [
         {
-          text: "Project Files",
-          icon: <AddToDriveIcon />,
-          path: "/document",
-        },
-        {
-          text: "Shared with Me",
+          text: "View Work Orders",
           icon: <FolderSharedIcon />,
-          path: "/document",
+          path: "/issues",
         },
         {
-          text: "Shared with Others",
+          text: "New Work Order",
+          icon: <AddToDriveIcon />,
+          path: "/addWorkOrder",
+        },
+
+        {
+          text: "Project Files & Settings",
           icon: <ShareIcon />,
           path: "/document",
         },
       ],
     },
-    {
-      text: "Planning",
-      icon: <AddTaskIcon color="secondary" />,
-      path: "/planning",
-      items: [],
-    },
-    {
-      text: "Collaboration",
-      icon: <AddTaskIcon color="secondary" />,
-      path: "/collaboration",
-      items: [],
-    },
+
     {
       text: "Dashboard",
       icon: <AddTaskIcon color="secondary" />,

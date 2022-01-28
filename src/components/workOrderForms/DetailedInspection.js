@@ -1,30 +1,17 @@
 import {
-  Autocomplete,
-  Button,
+  Box,
   Chip,
   Divider,
-  TextField,
   Typography,
+  Autocomplete,
+  TextField,
 } from "@mui/material";
-import { Box } from "@mui/system";
 import { useState } from "react";
-import cuid from "cuid";
 
-import { FaTimes } from "react-icons/fa";
+import FileUploadForm from "./FileUploadForm";
 
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelIcon from "@mui/icons-material/Cancel";
-
-function PassFail() {
-  //state
+function DetailedInspection() {
+  //states
 
   //this is to hold selected assets
   const [selectedAssets, setSelectedAssets] = useState([]);
@@ -37,23 +24,8 @@ function PassFail() {
   //this is to hold checkListTask value
   const [checkListTask, setCheckListTask] = useState();
 
-  //this is to hold all the checklists objects
-  const [checkListObjects, setCheckListObjects] = useState([]);
-
-  //function to handle adding new passfail to state
-  const onPassFailAdd = () => {
-    const newId = cuid();
-    const newCheckListItem = { newId, selectedAssets, checkListTask };
-    setCheckListObjects([...checkListObjects, newCheckListItem]);
-
-    setTimeout(console.log(checkListObjects), 10000);
-
-    //to reset the values
-    setSelectedAssets([""]);
-    setCheckListTask("");
-  };
-
   return (
+    //Main parent object
     <Box>
       {/* Form Header Label */}
       {/* We use a divider with chip and inside chip use the form header */}
@@ -67,14 +39,14 @@ function PassFail() {
               gutterBottom
               align="center"
             >
-              Pass Fail Form
+              Detailed Inspection
             </Typography>
           }
         />
       </Divider>
 
-      {/* This will have the select asset and text on left and an add button to its right */}
-      <Box sx={{ display: "flex" }}>
+      {/* This will have the select asset o its left and text field to its right */}
+      <Box sx={{ display: "flex", mt: 6 }}>
         {/* asset select */}
         <Autocomplete
           sx={{ minWidth: 200 }}
@@ -114,64 +86,37 @@ function PassFail() {
           value={checkListTask}
           onChange={(e) => setCheckListTask(e.target.value)}
           id="outlined-multiline-flexible"
-          label="Check Details"
+          label="Inspection Task"
           variant="outlined"
           sx={{ ml: 4, minWidth: 400 }}
         />
-
-        {/* Button */}
-        <Button variant="text" sx={{ ml: 3, mt: 2 }} onClick={onPassFailAdd}>
-          ADD
-        </Button>
       </Box>
 
-      {/* TO show the pass fail objects with pass fail boolean */}
+      {/* Long text field descripion of inspection task */}
       <Box sx={{ mt: 3 }}>
-        {/* Table to show results */}
-        <TableContainer
-          component={Paper}
-          sx={{ maxWidth: 1200, alignItems: "left" }}
-        >
-          <Table aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="left">Pass Fail Details</TableCell>
-                <TableCell align="left">Asset Name</TableCell>
-                <TableCell align="left">Pass</TableCell>
-                <TableCell align="left">Fail</TableCell>
-                <TableCell align="center">Actions</TableCell>
-              </TableRow>
-            </TableHead>
-
-            <TableBody>
-              {checkListObjects.map((checklist) => (
-                <TableRow
-                  key={checklist.newId}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    {checklist.checkListTask}
-                  </TableCell>
-                  <TableCell align="left">{checklist.selectedAssets}</TableCell>
-                  <TableCell align="left">
-                    {" "}
-                    <CheckCircleIcon />{" "}
-                  </TableCell>
-                  <TableCell align="left">
-                    {" "}
-                    <CancelIcon />
-                  </TableCell>
-                  <TableCell align="center">
-                    <FaTimes style={{ color: "red", cursor: "pointer" }} />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <TextField
+          fullWidth
+          id="standard-multiline-static"
+          label="Description of Inspection"
+          multiline
+          rows={4}
+          // defaultValue=""
+          variant="standard"
+        />
       </Box>
 
-      {/* end of main object Box */}
+      {/* This handles multiple file upload for technical spec */}
+      <Box sx={{ mt: 6 }} display={"block"}>
+        <Typography color="textSecondary" sx={{ mb: 1 }}>
+          {" "}
+          Upload Technical Specification Documents
+        </Typography>
+        <Box sx={{ ml: -1 }}>
+          <FileUploadForm />
+        </Box>
+      </Box>
+
+      {/* End of main parent Box */}
     </Box>
   );
 }
@@ -246,4 +191,4 @@ const assetOptions = [
   "Report",
 ];
 
-export default PassFail;
+export default DetailedInspection;

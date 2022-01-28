@@ -59,7 +59,7 @@ function Issues() {
       method: "DELETE",
     });
 
-    const newIssues = issues.filter((issue) => issue.id != id);
+    const newIssues = issues.filter((issue) => issue.id !== id);
     setIssues(newIssues);
   };
 

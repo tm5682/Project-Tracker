@@ -49,6 +49,10 @@ import CheckListForm from "./CheckListForm";
 
 import PassFail from "./PassFail";
 
+import DetailedInspection from "./DetailedInspection";
+
+import DowntimeMaintenance from "./DowntimeMaintenance";
+
 //some css
 const radioCss = {
   marginRight: 5,
@@ -128,13 +132,13 @@ function AddWorkOrder() {
           >
             <FormControlLabel
               control={<Radio color="secondary" />}
-              value="checklist"
+              value="checkList"
               label="Checklist"
               sx={{ ...radioCss }}
             />
             <FormControlLabel
               control={<Radio color="secondary" />}
-              value="passfail"
+              value="passFail"
               label="Pass/Fail"
               sx={{ ...radioCss }}
             />
@@ -172,7 +176,7 @@ function AddWorkOrder() {
           </Grid>
 
           {/* this part is for asset name using a label with selection */}
-          <Grid item sm={12} sx={{ mt: 3 }}>
+          <Grid item sm={12} sx={{ mt: 5 }}>
             <Autocomplete
               onChange={onIssueTagChange}
               multiple
@@ -196,7 +200,7 @@ function AddWorkOrder() {
                 <TextField
                   {...params}
                   variant="filled"
-                  label="Assets/Labels"
+                  label="Tags"
                   placeholder="Assets "
                 />
               )}
@@ -209,7 +213,7 @@ function AddWorkOrder() {
       </Grid>
 
       {/* this section for due dates and start date */}
-      <Box>
+      <Box sx={{ mt: 6 }}>
         <Box sx={{ mt: 4, display: "flex" }}>
           <Box sx={{ mr: 60 }}>
             {/* this is start date */}
@@ -239,8 +243,8 @@ function AddWorkOrder() {
         </Box>
       </Box>
 
-      {/* Checkboxes */}
-      <Box sx={{ display: "flex" }}>
+      {/* for two Checkboxes */}
+      <Box sx={{ mt: 2, display: "flex" }}>
         {/* This one for machine offline */}
         <Box sx={{ display: "flex", ml: -1, mt: 3 }}>
           <Checkbox
@@ -276,8 +280,8 @@ function AddWorkOrder() {
         </Box>
       </Box>
 
-      {/* user assign */}
-      <Box>
+      {/* this is for user assign */}
+      <Box sx={{ mt: 5, mb: 8 }}>
         <Grid item sm={4} sx={{ mt: 3 }}>
           <Autocomplete
             onChange={onUsersAssigned}
@@ -311,13 +315,22 @@ function AddWorkOrder() {
       </Box>
 
       {/* Checklist form */}
-      <Box sx={{ mt: 5 }}>
-        <CheckListForm />
-      </Box>
+      {workOrderType === "checkList" && <CheckListForm />}
+      {console.log(workOrderType)}
 
-      {/* Pass Fail */}
-      <Box sx={{ mt: 5 }}>
-        <PassFail />
+      {/* Pass Fail Form */}
+      {workOrderType === "passFail" && <PassFail />}
+      {console.log(workOrderType)}
+
+      {/* Detailed Inspection Form */}
+      {workOrderType === "detailedInspection" && <DetailedInspection />}
+
+      {/* DowntimeMaintenance Form */}
+      {workOrderType === "downtimeMaintenance" && <DowntimeMaintenance />}
+
+      {/* Submit Button */}
+      <Box sx={{ mt: 6 }}>
+        <Button variant="contained">Submit</Button>
       </Box>
 
       {/* end of MAIN parent object box */}
