@@ -158,14 +158,19 @@ function Layout({ children }) {
     },
 
     {
-      text: "Project Page",
+      text: "Projects",
       icon: <ArticleIcon color="secondary" />,
-      path: "/issues",
+      path: "/",
       items: [
+        {
+          text: "Select",
+          icon: <FolderSharedIcon />,
+          path: "/selectProject",
+        },
         {
           text: "View Work Orders",
           icon: <FolderSharedIcon />,
-          path: "/issues",
+          path: "/viewWorkOrders",
         },
         {
           text: "New Work Order",

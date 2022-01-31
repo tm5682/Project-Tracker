@@ -29,6 +29,8 @@ import cuid from "cuid";
 
 import AddWorkOrder from "./components/workOrderForms/AddWorkOrder";
 
+import ViewWorkOrders from "./components/projectComponents/ViewWorkOrders";
+
 //custom theme using MUI theme
 // const theme = createTheme({
 //   palette: {
@@ -194,7 +196,10 @@ const App = () => {
 
           <Route path="/create" element={<Create />} />
 
-          <Route path="/issues" element={<Issues />} />
+          <Route
+            path="/viewWorkOrders/:projectId"
+            element={<ViewWorkOrders />}
+          />
 
           <Route path="/document" element={<DocumentPage />} />
           <Route path="/addWorkOrder" element={<AddWorkOrder />} />
