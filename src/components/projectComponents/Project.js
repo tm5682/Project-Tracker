@@ -39,13 +39,21 @@ const Project = ({ project, onDelete, onToggle }) => {
                 sx={{
                   "&:hover": {
                     color: "white",
-                    bgcolor: "purple",
+                    bgcolor: "primary.light",
                   },
 
                   backgroundColor: "white",
                 }}
               >
-                <AddIcon color="secondary" />
+                <AddIcon
+                  color="primary"
+                  sx={{
+                    "&:hover": {
+                      color: "white",
+                      bgcolor: "primary.light",
+                    },
+                  }}
+                />
               </Avatar>
             }
             key={project.id}

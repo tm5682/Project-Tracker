@@ -27,16 +27,6 @@ import AddWorkOrder from "./components/workOrderForms/AddWorkOrder";
 
 import ProjectPage from "./components/projectComponents/ProjectPage";
 
-//custom theme using MUI theme
-// const theme = createTheme({
-//   palette: {
-//     primary: {
-//       main: "#fefefe",
-//     },
-//     secondary: purple,
-//   },
-// });
-
 const App = () => {
   //v6 routers
   return (

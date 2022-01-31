@@ -5,10 +5,9 @@ import {
   Collapse,
   TextField,
   Typography,
-  useTheme,
 } from "@mui/material";
 import { Drawer } from "@mui/material";
-import { Box, typography } from "@mui/system";
+import { Box } from "@mui/system";
 
 import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 
@@ -152,19 +151,19 @@ function Layout({ children }) {
   const menuList = [
     {
       text: "Home",
-      icon: <HomeIcon color="secondary" />,
+      icon: <HomeIcon color="primary" />,
       path: "/",
       items: [],
     },
 
     {
       text: "Projects",
-      icon: <ArticleIcon color="secondary" />,
+      icon: <ArticleIcon color="primary" />,
       path: "/",
       items: [
         {
-          text: "View Project",
-          icon: <FolderSharedIcon />,
+          text: "View Projects",
+          icon: <FolderSharedIcon color="" />,
           path: "/selectProject",
         },
         // {
@@ -173,22 +172,22 @@ function Layout({ children }) {
         //   path: "/viewWorkOrders",
         // },
         {
-          text: "New Work Order",
-          icon: <AddToDriveIcon />,
-          path: `/addWorkOrder/default`,
+          text: "Quick New Work Order",
+          icon: <AddToDriveIcon color="" />,
+          path: `/addWorkOrder/quick`,
         },
         {
-          text: "New Issue",
-          icon: <AddToDriveIcon />,
+          text: "Quick New Issue",
+          icon: <AddToDriveIcon color="" />,
           path: "/createIssue",
         },
-
-        {
-          text: "Project Files & Settings",
-          icon: <ShareIcon />,
-          path: "/document",
-        },
       ],
+    },
+    {
+      text: "Chat",
+      icon: <HomeIcon color="primary" />,
+      path: "/",
+      items: [],
     },
   ];
 
@@ -201,10 +200,11 @@ function Layout({ children }) {
     <div style={{ display: "flex" }}>
       {/*app bar */}
       <AppBar
-        color="secondary"
         elevation={0}
         sx={{
           width: `calc(100% - ${drawerWidth}px )`,
+          color: "white",
+          backgroundColor: "primary.main",
         }}
       >
         <Toolbar>
@@ -223,6 +223,7 @@ function Layout({ children }) {
               label="Search"
               variant="outlined"
               size="small"
+              InputLabelProps={{ style: { color: "white" } }}
             />
             <ExpandMoreIcon sx={{ ml: 1 }} />
           </Box>
@@ -234,10 +235,6 @@ function Layout({ children }) {
             <HelpOutlineIcon sx={{ p: 1 }} />
             <SettingsIcon sx={{ p: 1 }} />
             <AppsRoundedIcon sx={{ p: 1 }} />
-            <Avatar
-              sx={{ p: 1, width: 35, height: 30 }}
-              src={process.env.PUBLIC_URL + "/userpic2.jpg"}
-            />
           </Box>
         </Toolbar>
       </AppBar>
