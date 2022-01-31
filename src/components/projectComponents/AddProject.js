@@ -1,4 +1,16 @@
 import { useState } from "react";
+import {
+  collection,
+  getDocs,
+  setDoc,
+  doc,
+  deleteDoc,
+  Timestamp,
+} from "firebase/firestore";
+
+import { db } from "../../firebase";
+
+import cuid from "cuid";
 
 function AddProject({ onAdd }) {
   const [name, setName] = useState("");
@@ -33,7 +45,7 @@ function AddProject({ onAdd }) {
     let finalBudget = null;
     let actualEndDate = null;
 
-    onAdd({
+    addProject({
       name,
       clientName,
       actionList,
@@ -54,6 +66,44 @@ function AddProject({ onAdd }) {
     setEstimatedEndDate("");
     setEstimatedBudget("");
     setCurrentTotalCost("");
+  };
+
+  //add project with firebase installed and setup
+  //we destructure the prop before adding
+  const addProject = async ({
+    name,
+    clientName,
+    actionList,
+    status,
+    startDate,
+    estimatedEndDate,
+    estimatedBudget,
+    currentTotalCost,
+    finalBudget,
+    actualEndDate,
+  }) => {
+    //unique id for the project
+    const newProjectId = cuid();
+
+    //mapping new project data to be added
+    const newProjectData = {
+      id: newProjectId,
+      name: name,
+      clientName: clientName,
+      actionList: actionList,
+      status: status,
+      startDate: startDate,
+      estimatedEndDate: estimatedEndDate,
+      actualEndDate: actualEndDate || null,
+      estimatedBudget: estimatedBudget,
+      finalBudget: finalBudget || null,
+      currentTotalCost: currentTotalCost,
+    };
+
+    await setDoc(doc(db, "projectList", newProjectId), newProjectData);
+
+    //we are updating the state with the newly added project values
+    //setProjects([...projectList, newProjectData]);
   };
 
   return (

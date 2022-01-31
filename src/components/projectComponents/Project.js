@@ -18,37 +18,24 @@ import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 
 import AddIcon from "@mui/icons-material/Add";
+import { useNavigate } from "react-router-dom";
+
+import { Link } from "react-router-dom";
 
 const Project = ({ project, onDelete, onToggle }) => {
-  return (
-    // <div
-    //   //if current status true then use reminder css class else project class
-    //   className={`project ${project.favorite ? "reminder" : ""}`}
-    //   onDoubleClick={() => onToggle(project.id)}
-    // >
-    //   <br />
-    //   <h3>
-    //     {project.name}
-    //     <FaTimes
-    //       style={{ color: "red", cursor: "pointer" }}
-    //       onClick={() => onDelete(project.id)}
-    //     />
-    //   </h3>
-    //   <br />
-    //   <p>
-    //     {" "}
-    //     <b>Client Name:</b> {project.clientName}{" "}
-    //   </p>
-    //   <br />
-    // </div>
+  const navigate = useNavigate();
 
+  return (
     <div>
+      {/* we use link to link the project id with router */}
+
       <Box display="flex" flexDirection="column">
         <Card>
           <CardHeader
             avatar={
               <Avatar
-                onClick={() => onToggle(project.id)}
+                //we navigate to project page when clicked
+                onClick={() => navigate(`/project/${project.id}`)}
                 sx={{
                   "&:hover": {
                     color: "white",
@@ -82,19 +69,21 @@ const Project = ({ project, onDelete, onToggle }) => {
           <CardContent>
             <Grid container spacing={1} sx={{ flexDirection: "column" }}>
               <Grid item>
-                <Typography variant="h8">Project Status: Ongoing</Typography>
+                <Typography variant="h8">Total Work Orders: 175</Typography>
               </Grid>
 
               <Grid item>
-                <Typography variant="h8">Users: 12</Typography>
+                <Typography variant="h8">
+                  Total Unresolved Issues: 12
+                </Typography>
               </Grid>
 
               <Grid item>
-                <Typography variant="h8">Duration: 12 months </Typography>
+                <Typography variant="h8">Past Due Work Orders: 19 </Typography>
               </Grid>
             </Grid>
 
-            {project.actionList && <ProjectActionList />}
+            {/* {project.actionList && <ProjectActionList />} */}
           </CardContent>
         </Card>
       </Box>

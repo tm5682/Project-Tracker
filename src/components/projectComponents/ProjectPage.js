@@ -2,7 +2,7 @@ import { Box } from "@mui/system";
 import React from "react";
 import { useParams } from "react-router-dom";
 
-function ViewWorkOrders() {
+function ProjectPage() {
   //to grab route parameters
   const { projectId } = useParams();
   return (
@@ -14,4 +14,4 @@ function ViewWorkOrders() {
   );
 }
 
-export default ViewWorkOrders;
+export default ProjectPage;

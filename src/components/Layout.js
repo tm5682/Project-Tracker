@@ -163,19 +163,24 @@ function Layout({ children }) {
       path: "/",
       items: [
         {
-          text: "Select",
+          text: "View Project",
           icon: <FolderSharedIcon />,
           path: "/selectProject",
         },
-        {
-          text: "View Work Orders",
-          icon: <FolderSharedIcon />,
-          path: "/viewWorkOrders",
-        },
+        // {
+        //   text: "View Work Orders",
+        //   icon: <FolderSharedIcon />,
+        //   path: "/viewWorkOrders",
+        // },
         {
           text: "New Work Order",
           icon: <AddToDriveIcon />,
-          path: "/addWorkOrder",
+          path: `/addWorkOrder/default`,
+        },
+        {
+          text: "New Issue",
+          icon: <AddToDriveIcon />,
+          path: "/createIssue",
         },
 
         {
@@ -184,13 +189,6 @@ function Layout({ children }) {
           path: "/document",
         },
       ],
-    },
-
-    {
-      text: "Dashboard",
-      icon: <AddTaskIcon color="secondary" />,
-      path: "/dashboard",
-      items: [],
     },
   ];
 
