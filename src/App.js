@@ -4,24 +4,12 @@ import Create from "./components/Create";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import { Container, createTheme, ThemeProvider } from "@mui/material";
-import { purple } from "@mui/material/colors";
+import { Container } from "@mui/material";
+
 import Layout from "./components/Layout";
 
 import SelectProject from "./components/projectComponents/SelectProject";
 import DocumentPage from "./components/documentControl/DocumentPage";
-
-import { db } from "./firebase";
-import {
-  collection,
-  getDocs,
-  setDoc,
-  doc,
-  deleteDoc,
-  Timestamp,
-} from "firebase/firestore";
-
-import cuid from "cuid";
 
 import AddWorkOrder from "./components/workOrderForms/AddWorkOrder";
 

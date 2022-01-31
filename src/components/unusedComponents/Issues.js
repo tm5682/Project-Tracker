@@ -6,7 +6,7 @@ import Container from "@mui/material/Container";
 
 import CardNote from "./CardNote";
 
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import {
   collection,
   getDocs,
