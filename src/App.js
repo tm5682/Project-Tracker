@@ -25,7 +25,7 @@ const App = () => {
             path="/"
             element={
               <Container>
-                <div></div>
+                <ProjectPage />
               </Container>
             }
           />
