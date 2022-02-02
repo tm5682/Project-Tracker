@@ -37,7 +37,7 @@ for (let i = 0; i < 20; i++) {
       workorderTypes[Math.floor(Math.random() * workorderTypes.length)],
     workOrderCreationDate: faker.date.past().toLocaleDateString("en-US"),
     workOrderDueDate: faker.date.past().toLocaleDateString("en-US"),
-    workOrderAssignedUsers:
+    workOrderAssignedUser:
       faker.lorem.word().charAt(0).toUpperCase() + faker.lorem.word().slice(1),
     workOrderStatus:
       workOrderStatuses[Math.floor(Math.random() * workOrderStatuses.length)],
@@ -48,13 +48,14 @@ for (let i = 0; i < 20; i++) {
 const tableContainer = {
   borderRadius: 1,
   margin: "10 px 10 px",
-  maxWidth: 1300,
+  maxWidth: 1400,
 };
 
 const tableHeader = {
   fontWeight: "bold",
-  backgroundColor: (theme) => theme.palette.primary.light,
-  color: (theme) => theme.palette.getContrastText(theme.palette.primary.dark),
+  //backgroundColor: (theme) => theme.palette.primary.light,
+  color: (theme) => theme.palette.primary.dark,
+  borderBottom: (theme) => `1px dotted ${theme.palette.primary.light}`,
 };
 
 const avatar = {
@@ -64,23 +65,23 @@ const avatar = {
 
 const names = {
   //fontWeight: "bold",
-  color: (theme) => theme.palette.primary.light,
+  //color: "textSecondary",
 };
 
 const workOrderTypeCss = {
   fontWeight: "bold",
   fontSize: "0.8rem",
-  color: (theme) => theme.palette.primary.dark,
+  color: (theme) => theme.palette.primary.main,
 };
 
 const workOrderStatusCss = {
-  fontWeight: "bold",
-  fontSize: "0.75rem",
+  //fontWeight: "bold",
+  fontSize: "0.8rem",
   color: "white",
   backgroundColor: "Blue",
   borderRadius: 8,
-  padding: "3px 10px",
-  //display: "inline-block",
+  padding: "4px 10px",
+  display: "inline-block",
 };
 
 function ProjectPage() {
@@ -97,14 +98,30 @@ function ProjectPage() {
             <TableRow align="center">
               {/* <TableCell sx={{ ...tableHeader }}>Project Name</TableCell> */}
               <TableCell sx={{ ...tableHeader }}>
-                <Typography>WorkOrder Name</Typography>
+                <Typography variant="h6">WorkOrder Name</Typography>
               </TableCell>
-              <TableCell sx={{ ...tableHeader }}>Type</TableCell>
-              <TableCell sx={{ ...tableHeader }}>Creation Date</TableCell>
-              <TableCell sx={{ ...tableHeader }}>Due Date</TableCell>
-              <TableCell sx={{ ...tableHeader }}>Assigned Users</TableCell>
-              <TableCell sx={{ ...tableHeader }}>Status</TableCell>
-              <TableCell sx={{ ...tableHeader }}>Send Reminder</TableCell>
+              <TableCell sx={{ ...tableHeader }}>
+                <Typography variant="h6">Type</Typography>
+              </TableCell>
+              <TableCell sx={{ ...tableHeader }}>
+                <Typography variant="h6" noWrap>
+                  Creation Date
+                </Typography>
+              </TableCell>
+              <TableCell sx={{ ...tableHeader }}>
+                <Typography variant="h6" noWrap>
+                  Due Date
+                </Typography>
+              </TableCell>
+              <TableCell sx={{ ...tableHeader }}>
+                <Typography variant="h6">Assigned User</Typography>
+              </TableCell>
+              <TableCell sx={{ ...tableHeader }}>
+                <Typography variant="h6">Status</Typography>
+              </TableCell>
+              <TableCell sx={{ ...tableHeader }} align="center">
+                <Typography variant="h6">Send Reminder</Typography>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -123,7 +140,7 @@ function ProjectPage() {
                   {workOrderForm.projectName}
                 </TableCell> */}
                 <TableCell component="th" scope="row" sx={{ ...names }}>
-                  <Typography variant="h6">
+                  <Typography variant="body1" color="textSecondary">
                     {workOrderForm.workOrderName}
                   </Typography>
                 </TableCell>
@@ -146,16 +163,16 @@ function ProjectPage() {
                   <Grid container>
                     <Grid item sm={2}>
                       <Avatar
-                        alt={workOrderForm.workOrderAssignedUsers}
+                        alt={workOrderForm.workOrderAssignedUser}
                         src="."
                         sx={{ ...avatar }}
                       />
                     </Grid>
 
                     <Grid item sm={10} sx={{ ml: 6, p: 0.5, mt: -4.5 }}>
-                      <Typography color="secondary">
+                      <Typography variant="body2" color="textSecondary">
                         {" "}
-                        {workOrderForm.workOrderAssignedUsers}
+                        {workOrderForm.workOrderAssignedUser}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -182,7 +199,11 @@ function ProjectPage() {
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  <Button>Send Reminder</Button>
+                  <Button>
+                    <Typography variant="button" color="textSecondary">
+                      Send Reminder
+                    </Typography>
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
