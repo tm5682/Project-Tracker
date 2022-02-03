@@ -13,6 +13,8 @@ import AddWorkOrder from "./components/workOrderForms/AddWorkOrder";
 
 import ProjectPage from "./components/projectComponents/ProjectPage";
 
+import ProjectPageWorkOrderTable from "./components/projectComponents/ProjectPageWorkOrderTable";
+
 const App = () => {
   //v6 routers
   return (
@@ -39,6 +41,11 @@ const App = () => {
           <Route path="/document" element={<DocumentPage />} />
 
           <Route path="/addWorkOrder/:projectId" element={<AddWorkOrder />} />
+
+          <Route
+            path="/ProjectPageWorkOrderTable"
+            element={<ProjectPageWorkOrderTable />}
+          />
         </Routes>
       </Layout>
     </Router>
