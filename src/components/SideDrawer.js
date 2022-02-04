@@ -28,6 +28,9 @@ import AddToDriveIcon from "@mui/icons-material/AddToDrive";
 
 import FolderSharedIcon from "@mui/icons-material/FolderShared";
 
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
+import ChatIcon from "@mui/icons-material/Chat";
+
 const drawerWidth = 240;
 
 const activeMenuColor = {
@@ -133,34 +136,18 @@ function SideDrawer() {
     {
       text: "Projects",
       icon: <ArticleIcon color="primary" />,
-      path: "/",
-      items: [
-        {
-          text: "View Projects",
-          icon: <FolderSharedIcon color="" />,
-          path: "/selectProject",
-        },
-        // {
-        //   text: "View Work Orders",
-        //   icon: <FolderSharedIcon />,
-        //   path: "/viewWorkOrders",
-        // },
-        {
-          text: "Quick New Work Order",
-          icon: <AddToDriveIcon color="" />,
-          path: `/addWorkOrder/quick`,
-        },
-        {
-          text: "Quick New Issue",
-          icon: <AddToDriveIcon color="" />,
-          path: "/createIssue",
-        },
-      ],
+      path: "/selectProject",
+    },
+    {
+      text: "User Management",
+      icon: <PersonAddAltIcon color="primary" />,
+      path: "/editUserProfile",
+      items: [],
     },
     {
       text: "Chat",
-      icon: <HomeIcon color="primary" />,
-      path: "/",
+      icon: <ChatIcon color="primary" />,
+      path: "/chat",
       items: [],
     },
   ];

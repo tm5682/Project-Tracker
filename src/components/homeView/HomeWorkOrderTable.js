@@ -116,6 +116,12 @@ function stableSort(array, comparator) {
 //column headers
 const headCells = [
   {
+    id: "projectName",
+    numeric: false,
+    disablePadding: true,
+    label: " Project Name",
+  },
+  {
     id: "workOrderName",
     numeric: false,
     disablePadding: true,
@@ -211,23 +217,13 @@ const EnhancedTableToolbar = (props) => {
         pr: { xs: 1, sm: 1 },
       }}
     >
-      <AddIcon
-        onClick={() => navigate(`/addWorkOrder/${projectId}`)}
-        color="primary"
-        sx={{
-          "&:hover": {
-            color: "white",
-            bgcolor: "primary.light",
-          },
-        }}
-      />
       <Typography
         color="textSecondary"
-        sx={{ ml: 2, flex: "1 1 100%" }}
+        sx={{ flex: "1 1 100%" }}
         variant="h6"
         id="tableTitle"
       >
-        Create New Work Order
+        All Work Orders
       </Typography>
       <Tooltip title="Filter list">
         <IconButton>
@@ -250,7 +246,7 @@ function ProjectPageWorkOrderTable() {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const { projectId } = useParams();
+  // const { projectId } = useParams();
 
   const navigate = useNavigate();
 
@@ -258,9 +254,10 @@ function ProjectPageWorkOrderTable() {
   for (let i = 0; i < 20; i++) {
     workOrderForms[i] = {
       workOrderId: faker.datatype.uuid(),
-      // projectName:
-      //   faker.lorem.word().charAt(0).toUpperCase() + faker.lorem.word().slice(1),
-      workOrderProjectId: projectId,
+      workOrderProjectId: faker.datatype.uuid(),
+      projectName:
+        faker.lorem.word().charAt(0).toUpperCase() +
+        faker.lorem.word().slice(1),
       workOrderName:
         faker.lorem.sentence().charAt(0).toUpperCase() +
         faker.lorem.sentence().slice(1),
@@ -352,6 +349,19 @@ function ProjectPageWorkOrderTable() {
                       key={workOrderForm.workOrderId}
                       selected={isItemSelected}
                     >
+                      <TableCell
+                        onClick={(event) =>
+                          handleClick(
+                            event,
+                            workOrderForm.workOrderProjectId,
+                            workOrderForm.workOrderId
+                          )
+                        }
+                      >
+                        {" "}
+                        <Typography>{workOrderForm.projectName}</Typography>
+                      </TableCell>
+
                       <TableCell
                         onClick={(event) =>
                           handleClick(

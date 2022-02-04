@@ -17,6 +17,10 @@ import ProjectPageWorkOrderTable from "./components/projectComponents/ProjectPag
 
 import WorkOrderPage from "./components/workOrderPage.js/WorkOrderPage";
 
+import EditUserProfile from "./components/userManagement.js/EditUserProfile";
+
+import MainHomeView from "./components/homeView/MainHomeView";
+
 const App = () => {
   //v6 routers
   return (
@@ -29,7 +33,7 @@ const App = () => {
             path="/"
             element={
               <Container>
-                <ProjectPage />
+                <MainHomeView />
               </Container>
             }
           />
@@ -48,6 +52,8 @@ const App = () => {
             path="project/:projectId/:workOrderId"
             element={<WorkOrderPage />}
           />
+
+          <Route path="/editUserProfile/" element={<EditUserProfile />} />
         </Routes>
       </Layout>
     </Router>

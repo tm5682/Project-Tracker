@@ -11,7 +11,6 @@ function ProjectPage() {
   const { projectId } = useParams();
   return (
     <Box>
-      Will show things for project id: {projectId}
       <ProjectPageWorkOrderTable />
       {/* end of main object box */}
     </Box>
