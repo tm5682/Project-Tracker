@@ -15,6 +15,8 @@ import ProjectPage from "./components/projectComponents/ProjectPage";
 
 import ProjectPageWorkOrderTable from "./components/projectComponents/ProjectPageWorkOrderTable";
 
+import WorkOrderPage from "./components/workOrderPage.js/WorkOrderPage";
+
 const App = () => {
   //v6 routers
   return (
@@ -43,8 +45,8 @@ const App = () => {
           <Route path="/addWorkOrder/:projectId" element={<AddWorkOrder />} />
 
           <Route
-            path="/ProjectPageWorkOrderTable"
-            element={<ProjectPageWorkOrderTable />}
+            path="project/:projectId/:workOrderId"
+            element={<WorkOrderPage />}
           />
         </Routes>
       </Layout>

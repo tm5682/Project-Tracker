@@ -6,7 +6,7 @@ import faker from "@faker-js/faker";
 import { Avatar, Button, Grid, Typography } from "@mui/material";
 
 import PropTypes from "prop-types";
-import { alpha } from "@mui/material/styles";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -17,7 +17,7 @@ import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
+
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -26,11 +26,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 
+import { useNavigate } from "react-router-dom";
+
 //css for table
 const tableContainer = {
   borderRadius: 1,
   margin: "10 px 10 px",
-  maxWidth: 1400,
+  maxWidth: 14000,
 };
 
 const tableHeader = {
@@ -76,26 +78,6 @@ let workOrderForms = [],
     "DueThisWeek",
     "DueLater",
   ];
-
-//this is to generate and hold fake issue data for now
-for (let i = 0; i < 20; i++) {
-  workOrderForms[i] = {
-    workOrderId: faker.datatype.uuid(),
-    // projectName:
-    //   faker.lorem.word().charAt(0).toUpperCase() + faker.lorem.word().slice(1),
-    workOrderName:
-      faker.lorem.sentence().charAt(0).toUpperCase() +
-      faker.lorem.sentence().slice(1),
-    workOrderType:
-      workorderTypes[Math.floor(Math.random() * workorderTypes.length)],
-    workOrderCreationDate: faker.date.past().toLocaleDateString("en-US"),
-    workOrderDueDate: faker.date.past().toLocaleDateString("en-US"),
-    workOrderAssignedUser:
-      faker.lorem.word().charAt(0).toUpperCase() + faker.lorem.word().slice(1),
-    workOrderStatus:
-      workOrderStatuses[Math.floor(Math.random() * workOrderStatuses.length)],
-  };
-}
 
 //This is MUI code customized
 
@@ -176,14 +158,7 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-  const {
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
+  const { order, orderBy, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -191,24 +166,10 @@ function EnhancedTableHead(props) {
   return (
     <TableHead sx={{ ...tableContainer }}>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            sx={{ ...tableHeader }}
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              "aria-label": "select all work orders",
-            }}
-          />
-        </TableCell>
         {headCells.map((headCell) => (
           <TableCell
             sx={{ ...tableHeader }}
             key={headCell.id}
-            // align={headCell.numeric ? "right" : "left"}
-            padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
@@ -231,70 +192,39 @@ function EnhancedTableHead(props) {
 }
 
 EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(["asc", "desc"]).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
 
 const EnhancedTableToolbar = (props) => {
-  const { numSelected } = props;
-
   return (
     <Toolbar
       sx={{
         pl: { sm: 2 },
         pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(
-              theme.palette.primary.main,
-              theme.palette.action.activatedOpacity
-            ),
-        }),
       }}
     >
-      {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          Work Orders
-        </Typography>
-      )}
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
+      <Typography
+        sx={{ flex: "1 1 100%" }}
+        variant="h6"
+        id="tableTitle"
+        component="div"
+      >
+        Work Orders
+      </Typography>
+
+      <Tooltip title="Filter list">
+        <IconButton>
+          <FilterListIcon />
+        </IconButton>
+      </Tooltip>
     </Toolbar>
   );
 };
 
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
+EnhancedTableToolbar.propTypes = {};
 
 //Main export function starts here
 
@@ -306,39 +236,49 @@ function ProjectPageWorkOrderTable() {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+  const { projectId } = useParams();
+
+  const navigate = useNavigate();
+
+  //this is to generate and hold fake issue data for now
+  for (let i = 0; i < 20; i++) {
+    workOrderForms[i] = {
+      workOrderId: faker.datatype.uuid(),
+      // projectName:
+      //   faker.lorem.word().charAt(0).toUpperCase() + faker.lorem.word().slice(1),
+      workOrderProjectId: projectId,
+      workOrderName:
+        faker.lorem.sentence().charAt(0).toUpperCase() +
+        faker.lorem.sentence().slice(1),
+      workOrderType:
+        workorderTypes[Math.floor(Math.random() * workorderTypes.length)],
+      workOrderCreationDate: faker.date.past().toLocaleDateString("en-US"),
+      workOrderDueDate: faker.date.past().toLocaleDateString("en-US"),
+      workOrderAssignedUser:
+        faker.lorem.word().charAt(0).toUpperCase() +
+        faker.lorem.word().slice(1),
+      workOrderStatus:
+        workOrderStatuses[Math.floor(Math.random() * workOrderStatuses.length)],
+    };
+  }
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = workOrderForms.map((n) => n.workOrderName);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
+  const handleClick = (event, workOrderProjectId, workOrderId) => {
+    const selectedIndex = selected.indexOf(workOrderId);
+    let newSelected = "";
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
+      newSelected = newSelected.concat(selected, workOrderId);
     }
 
     setSelected(newSelected);
+
+    navigate(`/project/${workOrderProjectId}/${workOrderId}`);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -376,7 +316,6 @@ function ProjectPageWorkOrderTable() {
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={workOrderForms.length}
             />
@@ -387,56 +326,72 @@ function ProjectPageWorkOrderTable() {
               {stableSort(workOrderForms, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((workOrderForm, index) => {
-                  const isItemSelected = isSelected(
-                    workOrderForm.workOrderName
-                  );
-                  const labelId = `enhanced-table-checkbox-${index}`;
+                  const isItemSelected = isSelected(workOrderForm.workOrderId);
+                  //const labelId = `enhanced-table-checkbox-${index}`;
+                  const labelId = workOrderForm.workOrderId;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) =>
-                        handleClick(event, workOrderForm.workOrderName)
-                      }
-                      role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={workOrderForm.workOrderName}
+                      key={workOrderForm.workOrderId}
                       selected={isItemSelected}
                     >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            "aria-labelledby": labelId,
-                          }}
-                        />
-                      </TableCell>
-
                       <TableCell
+                        onClick={(event) =>
+                          handleClick(
+                            event,
+                            workOrderForm.workOrderProjectId,
+                            workOrderForm.workOrderId
+                          )
+                        }
                         component="th"
                         id={labelId}
                         scope="row"
                         padding="none"
-                        sx={{ ...names }}
+                        sx={{ ...names, p: 1.5 }}
                       >
                         <Typography variant="body1" color="textSecondary">
                           {workOrderForm.workOrderName}
                         </Typography>
                       </TableCell>
-                      <TableCell>
+                      <TableCell
+                        onClick={(event) =>
+                          handleClick(
+                            event,
+                            workOrderForm.workOrderProjectId,
+                            workOrderForm.workOrderId
+                          )
+                        }
+                      >
                         {" "}
                         <Typography sx={{ ...workOrderTypeCss }}>
                           {workOrderForm.workOrderType}
                         </Typography>
                       </TableCell>
-                      <TableCell>
+                      <TableCell
+                        onClick={(event) =>
+                          handleClick(
+                            event,
+                            workOrderForm.workOrderProjectId,
+                            workOrderForm.workOrderId
+                          )
+                        }
+                      >
                         <Typography color="textSecondary" variant="body2">
                           {workOrderForm.workOrderCreationDate}{" "}
                         </Typography>
                       </TableCell>
-                      <TableCell>
+                      <TableCell
+                        onClick={(event) =>
+                          handleClick(
+                            event,
+                            workOrderForm.workOrderProjectId,
+                            workOrderForm.workOrderId
+                          )
+                        }
+                      >
                         {" "}
                         <Typography color="textSecondary" variant="body2">
                           {workOrderForm.workOrderDueDate}
@@ -483,6 +438,7 @@ function ProjectPageWorkOrderTable() {
                           {workOrderForm.workOrderStatus}
                         </Typography>
                       </TableCell>
+
                       <TableCell>
                         <Button variant="outlined">
                           <Typography variant="button" color="textSecondary">
