@@ -21,6 +21,8 @@ import EditUserProfile from "./components/userManagement.js/EditUserProfile";
 
 import MainHomeView from "./components/homeView/MainHomeView";
 
+import UserManagementPage from "./components/userManagement.js/UserManagementPage";
+
 const App = () => {
   //v6 routers
   return (
@@ -54,6 +56,7 @@ const App = () => {
           />
 
           <Route path="/editUserProfile/" element={<EditUserProfile />} />
+          <Route path="/userManagement/" element={<UserManagementPage />} />
         </Routes>
       </Layout>
     </Router>
