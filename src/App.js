@@ -51,12 +51,19 @@ const App = () => {
           <Route path="/addWorkOrder/:projectId" element={<AddWorkOrder />} />
 
           <Route
-            path="project/:projectId/:workOrderId"
+            path="/project/:projectId/:workOrderId"
             element={<WorkOrderPage />}
           />
 
-          <Route path="/editUserProfile/" element={<EditUserProfile />} />
-          <Route path="/userManagement/" element={<UserManagementPage />} />
+          <Route
+            path="/userManagement/:projectId/:userId"
+            element={<EditUserProfile />}
+          />
+
+          <Route
+            path="/userManagement/:projectId"
+            element={<UserManagementPage />}
+          />
         </Routes>
       </Layout>
     </Router>

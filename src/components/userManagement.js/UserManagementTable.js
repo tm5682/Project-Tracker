@@ -87,7 +87,7 @@ const headCells = [
     id: "userId",
     numeric: false,
     disablePadding: true,
-    label: " User Id",
+    label: "User Name",
   },
   {
     id: "userType",
@@ -168,7 +168,7 @@ const EnhancedTableToolbar = (props) => {
       }}
     >
       <AddIcon
-        onClick={() => navigate(`/addWorkOrder/${projectId}`)}
+        onClick={() => navigate(`/addNewUser/${projectId}`)}
         color="primary"
         sx={{
           "&:hover": {
@@ -219,6 +219,7 @@ function UserManagementTable() {
   for (let i = 0; i < 20; i++) {
     userTableData[i] = {
       userId: faker.datatype.uuid(),
+      name: faker.name.findName(),
       // projectName:
       //   faker.lorem.word().charAt(0).toUpperCase() + faker.lorem.word().slice(1),
       userType: userType[Math.floor(Math.random() * userType.length)],
@@ -236,7 +237,7 @@ function UserManagementTable() {
     setOrderBy(property);
   };
 
-  const handleClick = (event, organizationId, userId) => {
+  const handleClick = (event, projId, userId) => {
     const selectedIndex = selected.indexOf(userId);
     let newSelected = "";
 
@@ -246,7 +247,7 @@ function UserManagementTable() {
 
     setSelected(newSelected);
 
-    navigate(`/${organizationId}/${userId}`);
+    navigate(`/userManagement/${projectId}/${userId}`);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -306,7 +307,11 @@ function UserManagementTable() {
                     >
                       <TableCell
                         onClick={(event) =>
-                          handleClick(event, userTableSingleData.userId)
+                          handleClick(
+                            event,
+                            projectId,
+                            userTableSingleData.userId
+                          )
                         }
                         component="th"
                         id={labelId}
@@ -315,7 +320,7 @@ function UserManagementTable() {
                         sx={{ p: 1.5 }}
                       >
                         <Typography variant="body1" color="textSecondary">
-                          {userTableSingleData.userId}
+                          {userTableSingleData.name}
                         </Typography>
                       </TableCell>
 

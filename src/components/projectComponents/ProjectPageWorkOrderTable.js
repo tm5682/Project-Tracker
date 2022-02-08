@@ -70,7 +70,7 @@ const workOrderStatusCss = {
   display: "inline-block",
 };
 
-//this is to generate and hold fake workder data for now
+//this is to generate and hold fake workdOrder data for now
 let workOrderForms = [],
   workorderTypes = ["Checklist", "Pass/Fail", "Inspection", "DowntimeMain"],
   workOrderStatuses = [
@@ -370,6 +370,7 @@ function ProjectPageWorkOrderTable() {
                           {workOrderForm.workOrderName}
                         </Typography>
                       </TableCell>
+
                       <TableCell
                         onClick={(event) =>
                           handleClick(
@@ -397,6 +398,7 @@ function ProjectPageWorkOrderTable() {
                           {workOrderForm.workOrderCreationDate}{" "}
                         </Typography>
                       </TableCell>
+
                       <TableCell
                         onClick={(event) =>
                           handleClick(
@@ -411,6 +413,7 @@ function ProjectPageWorkOrderTable() {
                           {workOrderForm.workOrderDueDate}
                         </Typography>
                       </TableCell>
+
                       <TableCell>
                         <Grid container>
                           <Grid item sm={2}>
@@ -429,6 +432,7 @@ function ProjectPageWorkOrderTable() {
                           </Grid>
                         </Grid>
                       </TableCell>
+
                       <TableCell>
                         {" "}
                         <Typography
