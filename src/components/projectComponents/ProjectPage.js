@@ -13,6 +13,8 @@ import TotalWorkOrders from "./projectStats/TotalWorkOrders";
 import CompletedWorkOrders from "./projectStats/CompletedWorkOrders";
 import ExpiredWorkOrders from "./projectStats/ExpiredWorkOrders";
 import ProjectProgress from "./projectStats/ProjectProgress";
+import UserStatsChart from "./projectStats/UserStatsChart";
+import WorkOrdersPie from "./projectStats/WorkOrdersPie";
 
 function ProjectPage() {
   const navigate = useNavigate();
@@ -65,6 +67,9 @@ function ProjectPage() {
       </Box>
 
       <ProjectPageWorkOrderTable />
+
+      <UserStatsChart />
+      <WorkOrdersPie />
 
       {/* end of main object box */}
     </Box>
