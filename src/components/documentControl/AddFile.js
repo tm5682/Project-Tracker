@@ -5,6 +5,20 @@ import { Box } from "@mui/system";
 
 import { Modal, Typography } from "@mui/material";
 
+import {
+  db,
+  storage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  updateDoc,
+  serverTimestamp,
+  doc,
+  setDoc,
+  collection,
+  addDoc,
+} from "../../firebase";
+
 //these functions represent css that will be used within add file component
 
 const addFile = {
@@ -45,10 +59,13 @@ function getModalStyle() {
 function AddFile() {
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
-  const [file, setFile] = useState(null);
-  const [uploading, setUploading] = useState(false);
 
-  //functions for modal
+  const [file, setFile] = useState(null);
+
+  const [uploading, setUploading] = useState();
+
+  const [fileName, setFileName] = useState("");
+
   const modalOpen = () => {
     setOpen(true);
   };
@@ -57,13 +74,65 @@ function AddFile() {
     setOpen(false);
   };
 
-  const modalChange = (e) => {
+  const modalChange = async (e) => {
     if (e.target.files[0]) {
       setFile(e.target.files[0]);
+      setFileName(fileNameFunction(e.target.files[0]));
     }
   };
 
-  const modalUpload = () => {};
+  //get file name separated
+  const fileNameFunction = (file) => {
+    let temp = file.name.split(".");
+    let fName = temp.slice(0, -1).join(".");
+    return fName;
+  };
+
+  const modalUpload = () => {
+    setUploading(0);
+    let organizationName = "Leeway";
+    let projectName = "Matrix";
+
+    let fileSize;
+
+    const storageRef = ref(
+      storage,
+      `${organizationName}/${projectName}/${fileName}`
+    );
+
+    const uploadTask = uploadBytesResumable(storageRef, file, file.type);
+
+    uploadTask.on(
+      "state-changed",
+      (snapshot) => {
+        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setUploading(progress);
+
+        fileSize = snapshot.bytesTransferred;
+      },
+      (error) => {
+        alert("error: file not uploaded");
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+          await addDoc(collection(db, "Files"), {
+            name: fileName,
+            file_type: file.type,
+            creation_date: serverTimestamp(),
+            url: downloadURL,
+            project_name: projectName,
+            org_name: organizationName,
+            size: fileSize,
+          });
+        });
+      }
+    );
+
+    setFile(null);
+    setFileName("");
+    setOpen(false);
+  };
 
   return (
     <Box sx={{ ...addFile }}>
@@ -99,6 +168,17 @@ function AddFile() {
           )}
         </Box>
       </Modal>
+      {file && (
+        <Box sx={{ ml: 5 }}>
+          <Typography>
+            {" "}
+            Uploading % :
+            <Typography component={"span"} variant={"body2"} fontWeight={600}>
+              {uploading}
+            </Typography>{" "}
+          </Typography>
+        </Box>
+      )}
     </Box>
   );
 }

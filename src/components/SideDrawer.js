@@ -141,7 +141,13 @@ function SideDrawer() {
     {
       text: "User Management",
       icon: <PersonAddAltIcon color="primary" />,
-      path: "/editUserProfile",
+      path: "/userManagement/:projectId/:userId",
+      items: [],
+    },
+    {
+      text: "File Management",
+      icon: <ChatIcon color="primary" />,
+      path: "/document",
       items: [],
     },
     {

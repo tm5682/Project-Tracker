@@ -5,6 +5,24 @@ import { initializeApp } from "firebase/app";
 
 import { getFirestore } from "firebase/firestore";
 
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+
+import {
+  updateDoc,
+  serverTimestamp,
+  collection,
+  getDocs,
+  setDoc,
+  doc,
+  deleteDoc,
+  addDoc,
+} from "firebase/firestore";
+
 // import { getAuth } from "firebase/auth";
 
 // import { GoogleAuthProvider } from "firebase/auth";
@@ -30,6 +48,22 @@ const app = initializeApp(firebaseConfig);
 //represents db connection
 const db = getFirestore(app);
 
+const storage = getStorage(app);
+
 //getDocs to get data
 
-export { db };
+export {
+  db,
+  storage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  updateDoc,
+  serverTimestamp,
+  collection,
+  getDocs,
+  setDoc,
+  doc,
+  deleteDoc,
+  addDoc,
+};
