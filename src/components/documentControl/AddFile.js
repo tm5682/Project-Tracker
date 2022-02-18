@@ -61,6 +61,8 @@ function AddFile() {
   const [open, setOpen] = useState(false);
 
   const [file, setFile] = useState(null);
+  const [fileName, setFileName] = useState("");
+  const [fileType, setFileType] = useState("");
 
   const [downloadURL, setDownloadURL] = useState("");
 
@@ -69,22 +71,25 @@ function AddFile() {
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0)
 
-  let organizationName = "ETC Marine";
+  let organizationName = "TGSConsulting";
   let projectName = "Hazel"
 
 
   const modalOpen = () => {
     setOpen(true);
-    setUploadProgress(0)
   };
 
   const modalClose = () => {
     setOpen(false);
+    setUploading(false);
   };
 
   const modalChange = async (e) => {
     if (e.target.files[0]) {
-      setFile(e.target.files[0]);
+      setFile(e.target.files[0])
+      setFileName(e.target.files[0].name)
+      setFileType(e.target.files[0].type)
+
     }
   };
 
@@ -120,29 +125,42 @@ function AddFile() {
     );
 
     //we pass orgName+projectName changed to string and without any space as collection Name
-    saveFileInfo((organizationName + projectName).toString().replace(/\s/g, ''))
+    saveFileInfo()
 
     setOpen(false);
   
   };
 
  
-  const saveFileInfo = async (collectionName) => {
+  const saveFileInfo = async () => {
 
-   await addDoc(collection(db, collectionName), {
-      name: file.name,
-      file_type: file.type,
+    console.log(
+      fileName,
+      fileType,
+      serverTimestamp(),
+      downloadURL,
+      projectName,
+      organizationName,
+      fileSize
+    )
+
+   await addDoc(collection(db, `Files/${organizationName}/${projectName}`), {
+      name: fileName,
+      file_type: fileType,
       creation_date: serverTimestamp(),
       url: downloadURL,
       project_name: projectName,
       org_name: organizationName,
-      size: fileSize,
+      size: file.size,
     }).then(() => alert("File is posted"))
     .catch((error) => alert("error: " + error));
 
     setFile(null)
-    setUploading(false)
-    setUploadProgress("Uploaded")     
+    setFileSize("")
+    setFileType("")
+    setFileName("")
+    setUploading(false) 
+    setDownloadURL("") 
 
   }
 
