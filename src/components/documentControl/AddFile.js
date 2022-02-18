@@ -62,12 +62,20 @@ function AddFile() {
 
   const [file, setFile] = useState(null);
 
-  const [uploading, setUploading] = useState();
+  const [downloadURL, setDownloadURL] = useState("");
 
-  const [fileName, setFileName] = useState("");
+  const [fileSize, setFileSize] = useState();
+
+  const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0)
+
+  let organizationName = "ETC Marine";
+  let projectName = "Hazel"
+
 
   const modalOpen = () => {
     setOpen(true);
+    setUploadProgress(0)
   };
 
   const modalClose = () => {
@@ -77,27 +85,17 @@ function AddFile() {
   const modalChange = async (e) => {
     if (e.target.files[0]) {
       setFile(e.target.files[0]);
-      setFileName(fileNameFunction(e.target.files[0]));
     }
   };
 
-  //get file name separated
-  const fileNameFunction = (file) => {
-    let temp = file.name.split(".");
-    let fName = temp.slice(0, -1).join(".");
-    return fName;
-  };
+
 
   const modalUpload = () => {
-    setUploading(0);
-    let organizationName = "Leeway";
-    let projectName = "Matrix";
-
-    let fileSize;
+    setUploading(true);
 
     const storageRef = ref(
       storage,
-      `${organizationName}/${projectName}/${fileName}`
+      `${organizationName}/${projectName}/${file.name}`
     );
 
     const uploadTask = uploadBytesResumable(storageRef, file, file.type);
@@ -106,33 +104,48 @@ function AddFile() {
       "state-changed",
       (snapshot) => {
         let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setUploading(progress);
+        setUploadProgress(progress);
 
-        fileSize = snapshot.bytesTransferred;
+        setFileSize(snapshot.bytesTransferred)
       },
       (error) => {
         alert("error: file not uploaded");
         console.log(error);
       },
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-          await addDoc(collection(db, "Files"), {
-            name: fileName,
-            file_type: file.type,
-            creation_date: serverTimestamp(),
-            url: downloadURL,
-            project_name: projectName,
-            org_name: organizationName,
-            size: fileSize,
-          });
+        getDownloadURL(uploadTask.snapshot.ref).then( async (downloadURL) => {
+         setDownloadURL(downloadURL)
         });
       }
     );
 
-    setFile(null);
-    setFileName("");
+    //we pass orgName+projectName changed to string and without any space as collection Name
+    saveFileInfo((organizationName + projectName).toString().replace(/\s/g, ''))
+
     setOpen(false);
+  
   };
+
+ 
+  const saveFileInfo = async (collectionName) => {
+
+   await addDoc(collection(db, collectionName), {
+      name: file.name,
+      file_type: file.type,
+      creation_date: serverTimestamp(),
+      url: downloadURL,
+      project_name: projectName,
+      org_name: organizationName,
+      size: fileSize,
+    }).then(() => alert("File is posted"))
+    .catch((error) => alert("error: " + error));
+
+    setFile(null)
+    setUploading(false)
+    setUploadProgress("Uploaded")     
+
+  }
+
 
   return (
     <Box sx={{ ...addFile }}>
@@ -152,7 +165,7 @@ function AddFile() {
           style={modalStyle}
           sx={{
             ...paper,
-            backgroundColor: "secondary",
+            backgroundColor: "secondary", 
             boxShadow: 5,
             padding: 5,
           }}
@@ -168,17 +181,17 @@ function AddFile() {
           )}
         </Box>
       </Modal>
-      {file && (
+     
+
+     { file &&
         <Box sx={{ ml: 5 }}>
-          <Typography>
-            {" "}
-            Uploading % :
+        
             <Typography component={"span"} variant={"body2"} fontWeight={600}>
-              {uploading}
-            </Typography>{" "}
+            Uploading % : {uploadProgress}
           </Typography>
         </Box>
-      )}
+      }
+
     </Box>
   );
 }
