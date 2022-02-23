@@ -19,6 +19,8 @@ import {
   addDoc,
 } from "../../firebase";
 
+import { useParams } from "react-router-dom";
+
 //these functions represent css that will be used within add file component
 
 const addFile = {
@@ -57,6 +59,10 @@ function getModalStyle() {
 }
 
 function AddFile() {
+
+   //to grab route parameters
+   const { projectId } = useParams();
+
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
 
@@ -66,13 +72,12 @@ function AddFile() {
 
   const [downloadURL, setDownloadURL] = useState("");
 
-  const [fileSize, setFileSize] = useState();
-
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0)
 
   let organizationName = "TGSConsulting";
-  let projectName = "Hazel"
+  let projectName = "Ariyal"
+
 
 
   const modalOpen = () => {
@@ -111,7 +116,6 @@ function AddFile() {
         let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setUploadProgress(progress);
 
-        setFileSize(snapshot.bytesTransferred)
       },
       (error) => {
         alert("error: file not uploaded");
@@ -134,15 +138,6 @@ function AddFile() {
  
   const saveFileInfo = async () => {
 
-    console.log(
-      fileName,
-      fileType,
-      serverTimestamp(),
-      downloadURL,
-      projectName,
-      organizationName,
-      fileSize
-    )
 
    await addDoc(collection(db, `Files/${organizationName}/${projectName}`), {
       name: fileName,
@@ -156,7 +151,6 @@ function AddFile() {
     .catch((error) => alert("error: " + error));
 
     setFile(null)
-    setFileSize("")
     setFileType("")
     setFileName("")
     setUploading(false) 
