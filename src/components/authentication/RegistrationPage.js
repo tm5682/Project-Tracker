@@ -18,9 +18,9 @@ import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const passwordConfirmRef = useRef();
+  const [emailRef, setEmailRef] = useState("");
+  const [passwordRef, setPasswordRef] = useState("");
+  const [passwordConfirmRef, setPasswordConfirmRef] = useState("");
   const { signup } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -30,14 +30,15 @@ const Register = () => {
   const registrationFunction = async (e) => {
     e.preventDefault();
 
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+    if (passwordRef !== passwordConfirmRef) {
       return setError("Passwords do not match");
     }
 
     try {
       setError("");
       setLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value);
+      console.log(emailRef, passwordRef);
+      await signup(emailRef, passwordRef);
       navigate("/");
     } catch {
       setError("Failed to create an account");
@@ -81,30 +82,36 @@ const Register = () => {
               label="Email Address"
               margin="normal"
               name="email"
-              ref={emailRef}
               type="email"
               variant="outlined"
               required
+              onChange={(event) => {
+                setEmailRef(event.target.value);
+              }}
             />
             <TextField
               fullWidth
               label="Password"
               margin="normal"
               name="password"
-              ref={passwordRef}
               type="password"
               variant="outlined"
               required
+              onChange={(event) => {
+                setPasswordRef(event.target.value);
+              }}
             />
             <TextField
               fullWidth
               label="Password"
               margin="normal"
               name="password"
-              ref={passwordConfirmRef}
               type="password"
               variant="outlined"
               required
+              onChange={(event) => {
+                setPasswordConfirmRef(event.target.value);
+              }}
             />
             <Box
               sx={{

@@ -33,7 +33,7 @@ function MainHomeView() {
         sx={{ fontWeight: 600, mt: 1.25, mr: 0.5, display: "block" }}
         noWrap
       >
-        Logged in User Email:{currentUser.email} 
+        {(currentUser) ? `Logged in User Email: ${currentUser.email}` : "No User Logged In"}
       </Typography>
 
       <Link sx={{ display: "block", fontWeight: 600, mt: 1.25, mr: 0.5 }} to="/profile">
