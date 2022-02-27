@@ -20,7 +20,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const {login } = useAuth();
+  const {login, firebaseError } = useAuth();
   const [emailRef, setEmailRef] = useState("")
   const [passwordRef, setPasswordRef] = useState("")
   const [error, setError] = useState("");
@@ -32,14 +32,15 @@ const Login = () => {
 
     e.preventDefault();
 
-    try {
       setError("");
       setLoading(true);
-      console.log(emailRef,passwordRef)
       await login(emailRef, passwordRef);
+
+      if (firebaseError === null) {
       navigate("/");
-    } catch {
+    } else {
       setError("Failed to log in");
+      console.log(firebaseError.message);
     }
 
     setLoading(false);
@@ -62,6 +63,7 @@ const Login = () => {
             Dashboard
           </Button>
           {error && <Alert variant="danger">{error}</Alert>}
+          {firebaseError && <Alert variant="danger">{firebaseError}</Alert>}
 
           <form onSubmit={loginFunction}>
             <Box sx={{ my: 3 }}>

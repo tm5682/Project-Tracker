@@ -21,7 +21,7 @@ const Register = () => {
   const [emailRef, setEmailRef] = useState("");
   const [passwordRef, setPasswordRef] = useState("");
   const [passwordConfirmRef, setPasswordConfirmRef] = useState("");
-  const { signup } = useAuth();
+  const { signup, firebaseError } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -33,15 +33,15 @@ const Register = () => {
     if (passwordRef !== passwordConfirmRef) {
       return setError("Passwords do not match");
     }
-
-    try {
       setError("");
       setLoading(true);
-      console.log(emailRef, passwordRef);
       await signup(emailRef, passwordRef);
-      navigate("/");
-    } catch {
+      
+      if (firebaseError === null) {
+      navigate("/")
+      } else {
       setError("Failed to create an account");
+      console.log(firebaseError.message);
     }
 
     setLoading(false);
@@ -50,6 +50,7 @@ const Register = () => {
   return (
     <>
       {error && <Alert variant="danger">{error}</Alert>}
+      {firebaseError && <Alert variant="danger">{firebaseError.message}</Alert>}
 
       <title>Register</title>
 
