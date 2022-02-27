@@ -3,10 +3,13 @@ import { Box } from "@mui/system";
 
 import AddFile from "./AddFile";
 
+import FilesView from "./FilesView";
+
 function DocumentPage() {
   return (
     <Box>
       <AddFile />
+      <FilesView />
     </Box>
   );
 }

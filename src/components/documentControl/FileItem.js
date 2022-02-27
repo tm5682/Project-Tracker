@@ -1,5 +1,5 @@
 import React from 'react'
-
+import './DocumentControl.css'
 
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 
@@ -23,7 +23,7 @@ const FileItem = ({ id, name, timestamp, fileUrl, size }) => {
         <div className='fileItem'>
             <a href={fileUrl} target="_blank" download rel="noreferrer">
                 <div className="fileItem--left">
-                    <InsertDriveFileIcon />
+                    <InsertDriveFileIcon color="secondary" />
                     <p>{name}</p>
                 </div>
                 <div className="fileItem--right">

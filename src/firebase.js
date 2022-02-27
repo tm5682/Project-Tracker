@@ -5,6 +5,8 @@ import { initializeApp } from "firebase/app";
 
 import { getFirestore } from "firebase/firestore";
 
+import { getAuth } from "firebase/auth"
+
 import {
   getStorage,
   ref,
@@ -50,7 +52,7 @@ const db = getFirestore(app);
 
 const storage = getStorage(app);
 
-//getDocs to get data
+const auth = getAuth(app)
 
 export {
   db,
@@ -66,4 +68,5 @@ export {
   doc,
   deleteDoc,
   addDoc,
+  auth
 };

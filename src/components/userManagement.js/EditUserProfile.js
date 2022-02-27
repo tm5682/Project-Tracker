@@ -4,6 +4,9 @@ import { AccountProfileDetails } from "./AcountProfileDetails";
 
 import { useParams } from "react-router-dom";
 
+import { updateProfile } from "firebase/auth";
+import UpdateProfile from "../authentication/UpdateProfile";
+
 function EditUserProfile() {
   const { projectId, userId } = useParams();
   return (
@@ -29,7 +32,7 @@ function EditUserProfile() {
             <AccountProfile />
           </Grid>
           <Grid item lg={8} md={6} xs={12}>
-            <AccountProfileDetails />
+            <UpdateProfile />
           </Grid>
         </Grid>
       </Container>

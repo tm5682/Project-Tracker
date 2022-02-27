@@ -23,49 +23,65 @@ import MainHomeView from "./components/homeView/MainHomeView";
 
 import UserManagementPage from "./components/userManagement.js/UserManagementPage";
 
+import LoginPage from "./components/authentication/LoginPage";
+
+import RegistrationPage from "./components/authentication/RegistrationPage";
+
+import { AuthProvider } from "./components/contexts/AuthContext";
+
+import UpdateProfile from "./components/authentication/UpdateProfile";
+
 const App = () => {
   //v6 routers
   return (
     //<ThemeProvider theme={theme}>
     <Router>
-      <Layout>
-        <Routes>
-          <Route
-            exact
-            path="/"
-            element={
-              <Container>
-                <MainHomeView />
-              </Container>
-            }
-          />
+      <AuthProvider>
+        <Layout>
+          <Routes>
+            <Route path="profile" element={<UpdateProfile />} />
 
-          <Route path="/issue/:projectId" element={<Create />} />
+            <Route path="/login" element={<LoginPage />} />
 
-          <Route path="/selectProject" element={<SelectProject />} />
+            <Route path="/registration" element={<RegistrationPage />} />
 
-          <Route path="/project/:projectId" element={<ProjectPage />} />
+            <Route path="/issue/:projectId" element={<Create />} />
 
-          <Route path="/document" element={<DocumentPage />} />
+            <Route path="/selectProject" element={<SelectProject />} />
 
-          <Route path="/addWorkOrder/:projectId" element={<AddWorkOrder />} />
+            <Route path="/project/:projectId" element={<ProjectPage />} />
 
-          <Route
-            path="/project/:projectId/:workOrderId"
-            element={<WorkOrderPage />}
-          />
+            <Route path="/document" element={<DocumentPage />} />
 
-          <Route
-            path="/userManagement/:projectId/:userId"
-            element={<EditUserProfile />}
-          />
+            <Route path="/addWorkOrder/:projectId" element={<AddWorkOrder />} />
 
-          <Route
-            path="/userManagement/:projectId"
-            element={<UserManagementPage />}
-          />
-        </Routes>
-      </Layout>
+            <Route
+              path="/project/:projectId/:workOrderId"
+              element={<WorkOrderPage />}
+            />
+
+            <Route
+              path="/userManagement/:projectId/:userId"
+              element={<EditUserProfile />}
+            />
+
+            <Route
+              path="/userManagement/:projectId"
+              element={<UserManagementPage />}
+            />
+
+            <Route
+              exact
+              path="/"
+              element={
+                <Container>
+                  <MainHomeView />
+                </Container>
+              }
+            />
+          </Routes>
+        </Layout>
+      </AuthProvider>
     </Router>
     //</ThemeProvider>
   );
