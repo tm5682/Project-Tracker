@@ -56,14 +56,12 @@ const App = () => {
              
             <Route path="profile" element={<UpdateProfile />} />
 
-            <Route path="/issue/:projectId" element={<Create />} />
+            <Route path=":userID/selectProject" element={<SelectProject />} />
 
-            <Route path="/selectProject" element={<SelectProject />} />
-
-            <Route path="/project/:projectId" element={<ProjectPage />} />
+            <Route path=":userID/project/:projectId" element={<ProjectPage />} />
 
             <Route
-              path="/addWorkOrder/:projectId"
+              path="/:projectId/addWorkOrder/"
               element={<AddWorkOrder />}
             />  
 
