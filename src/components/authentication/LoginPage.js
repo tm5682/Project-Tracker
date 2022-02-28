@@ -18,30 +18,29 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { useAuth } from "../contexts/AuthContext";
 
 import { useNavigate } from "react-router-dom";
+import { is } from "date-fns/locale";
 
 const Login = () => {
-  const {login, firebaseError } = useAuth();
-  const [emailRef, setEmailRef] = useState("")
-  const [passwordRef, setPasswordRef] = useState("")
+  const { login, firebaseError } = useAuth();
+  const [emailRef, setEmailRef] = useState("");
+  const [passwordRef, setPasswordRef] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const loginFunction = async (e) => {
-
     e.preventDefault();
 
-      setError("");
-      setLoading(true);
+    try {
+      setError("")
+      setLoading(true)
       await login(emailRef, passwordRef);
-
-      if (firebaseError === null) {
-      navigate("/");
-    } else {
-      setError("Failed to log in");
-      console.log(firebaseError.message);
+      navigate("/")
+    } catch {
+      setError("Failed to log in")
     }
+
 
     setLoading(false);
   };
@@ -63,8 +62,7 @@ const Login = () => {
             Dashboard
           </Button>
           {error && <Alert variant="danger">{error}</Alert>}
-          {firebaseError && <Alert variant="danger">{firebaseError}</Alert>}
-
+         
           <form onSubmit={loginFunction}>
             <Box sx={{ my: 3 }}>
               <Typography color="textPrimary" variant="h4">

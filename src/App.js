@@ -1,6 +1,11 @@
 import Create from "./components/Create";
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
 import { Container } from "@mui/material";
 
@@ -31,19 +36,23 @@ import { AuthProvider } from "./components/contexts/AuthContext";
 
 import UpdateProfile from "./components/authentication/UpdateProfile";
 
+import PrivateRoute from "./components/PrivateRoute";
+
 const App = () => {
   //v6 routers
   return (
-    //<ThemeProvider theme={theme}>
-    <Router>
-      <AuthProvider>
-        <Layout>
-          <Routes>
+    <>
+      <Router>
+        <AuthProvider>
+          <Layout>
+            <Routes>
+              <Route path="/login" element={<LoginPage />} />
+
+              <Route path="/registration" element={<RegistrationPage />} />
+
+<         Route exact path='/' element={<PrivateRoute/>}>
+             
             <Route path="profile" element={<UpdateProfile />} />
-
-            <Route path="/login" element={<LoginPage />} />
-
-            <Route path="/registration" element={<RegistrationPage />} />
 
             <Route path="/issue/:projectId" element={<Create />} />
 
@@ -51,25 +60,20 @@ const App = () => {
 
             <Route path="/project/:projectId" element={<ProjectPage />} />
 
-            <Route path="/document" element={<DocumentPage />} />
-
-            <Route path="/addWorkOrder/:projectId" element={<AddWorkOrder />} />
+            <Route
+              path="/addWorkOrder/:projectId"
+              element={<AddWorkOrder />}
+            />  
 
             <Route
               path="/project/:projectId/:workOrderId"
               element={<WorkOrderPage />}
             />
 
-            <Route
-              path="/userManagement/:projectId/:userId"
-              element={<EditUserProfile />}
-            />
+            <Route path="/userManagement/" element={<UserManagementPage />} />
 
-            <Route
-              path="/userManagement/:projectId"
-              element={<UserManagementPage />}
-            />
-
+             
+             
             <Route
               exact
               path="/"
@@ -79,11 +83,18 @@ const App = () => {
                 </Container>
               }
             />
-          </Routes>
-        </Layout>
-      </AuthProvider>
-    </Router>
-    //</ThemeProvider>
+
+
+
+        </Route>
+
+
+
+            </Routes>
+          </Layout>
+        </AuthProvider>
+      </Router>
+    </>
   );
 };
 

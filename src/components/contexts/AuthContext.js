@@ -7,42 +7,26 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  onAuthStateChanged,
 } from "firebase/auth";
 
 const AuthContext = React.createContext();
 
-export function useAuth() {
-  return useContext(AuthContext);
-}
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
-  const [firebaseError, setFirebaseError] = useState();
 
   async function signup(email, password) {
-
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-    } catch (error) {
-      setFirebaseError(error);
-    }
+    return createUserWithEmailAndPassword(auth, email, password);
   }
 
   async function login(email, password) {
-    try {
-        await signInWithEmailAndPassword(auth, email, password);
-      } catch (error) {
-        setFirebaseError(error);
-      }
+    return signInWithEmailAndPassword(auth, email, password);
   }
 
   function logout() {
     return signOut(auth);
-  }
-
-  function resetPassword(email) {
-    return auth.sendPasswordResetEmail(email);
   }
 
   function updateUserEmail(email) {
@@ -54,7 +38,7 @@ export function AuthProvider({ children }) {
   }
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       setLoading(false);
     });
@@ -64,11 +48,9 @@ export function AuthProvider({ children }) {
 
   const value = {
     currentUser,
-    firebaseError,
     login,
     signup,
     logout,
-    resetPassword,
     updateUserEmail,
     updateUserPassword,
   };
@@ -78,4 +60,8 @@ export function AuthProvider({ children }) {
       {!loading && children}
     </AuthContext.Provider>
   );
+}
+
+export function useAuth() {
+  return useContext(AuthContext);
 }

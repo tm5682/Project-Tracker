@@ -6,7 +6,8 @@ import { useAuth } from "../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 
 import HomeWorkOrderTable from "./HomeWorkOrderTable";
-import { Alert, Button, Typography } from "@mui/material";
+import { Alert, Avatar, Button, Typography } from "@mui/material";
+import { red } from "@mui/material/colors";
 
 function MainHomeView() {
   const [error, setError] = useState("");
@@ -33,10 +34,22 @@ function MainHomeView() {
         sx={{ fontWeight: 600, mt: 1.25, mr: 0.5, display: "block" }}
         noWrap
       >
-        {(currentUser) ? `Logged in User Email: ${currentUser.email}` : "No User Logged In"}
+        {currentUser
+          ? `Logged in User Email: ${currentUser.email}`
+          : "No User Logged In"}
       </Typography>
 
-      <Link sx={{ display: "block", fontWeight: 600, mt: 1.25, mr: 0.5 }} to="/profile">
+          {console.log(currentUser)}
+      <Avatar
+        sx={{ bgcolor: red[500] }}
+      >
+       {currentUser.uid}
+      </Avatar> 
+
+      <Link
+        sx={{ display: "block", fontWeight: 600, mt: 1.25, mr: 0.5 }}
+        to="/profile"
+      >
         Update Profile
       </Link>
 
