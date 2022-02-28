@@ -33,16 +33,17 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      setError("")
-      setLoading(true)
+      setError("");
+      setLoading(true);
       await login(emailRef, passwordRef);
-      navigate("/")
+      setLoading(false);
+      navigate("/");
     } catch {
-      setError("Failed to log in")
+      setError("Failed to log in");
+      setLoading(false);
     }
 
-
-    setLoading(false);
+    
   };
 
   return (
@@ -62,7 +63,7 @@ const Login = () => {
             Dashboard
           </Button>
           {error && <Alert variant="danger">{error}</Alert>}
-         
+
           <form onSubmit={loginFunction}>
             <Box sx={{ my: 3 }}>
               <Typography color="textPrimary" variant="h4">

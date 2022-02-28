@@ -60,7 +60,7 @@ export default function UpdateProfile() {
           label="Email"
           name="email"
           type="email"
-          ref={emailRef}
+          inputRef={emailRef}
           required
           defaultValue={currentUser.email}
           variant="outlined"
@@ -73,7 +73,7 @@ export default function UpdateProfile() {
           helperText="Leave blank to keep the same"
           label="Password"
           name="password"
-          ref={passwordRef}
+          inputRef={passwordRef}
           variant="outlined"
         />
       </Grid>
@@ -84,7 +84,7 @@ export default function UpdateProfile() {
           helperText="Leave blank to keep the same"
           label="Confirm Password"
           name="confirmPassword"
-          ref={passwordConfirmRef}
+          inputRef={passwordConfirmRef}
           variant="outlined"
         />
       </Grid>

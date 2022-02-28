@@ -38,12 +38,13 @@ const Register = () => {
       setError("");
       setLoading(true);
       await signup(emailRef, passwordRef);
+      setLoading(false);
       navigate("/");
     } catch {
       setError("Failed to create an account");
+      setLoading(false);
     }
 
-    setLoading(false);
   };
 
   return (

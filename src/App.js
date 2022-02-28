@@ -50,6 +50,8 @@ const App = () => {
 
               <Route path="/registration" element={<RegistrationPage />} />
 
+              
+
 <         Route exact path='/' element={<PrivateRoute/>}>
              
             <Route path="profile" element={<UpdateProfile />} />
