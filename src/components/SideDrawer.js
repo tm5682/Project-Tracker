@@ -178,7 +178,7 @@ function SideDrawer() {
             variant="h5"
             sx={{ padding: (theme) => theme.spacing(3) }}
           >
-            Pennecon
+            CORSphere
           </Typography>
         </Box>
 
