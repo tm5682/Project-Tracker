@@ -19,6 +19,8 @@ import {
   addDoc,
 } from "../../firebase";
 
+import { useAuth } from "../contexts/AuthContext";
+
 import { useParams } from "react-router-dom";
 
 //these functions represent css that will be used within add file component
@@ -63,6 +65,8 @@ function AddFile() {
    //to grab route parameters
    const { projectId } = useParams();
 
+   const { currentUser } = useAuth();
+
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
 
@@ -75,7 +79,7 @@ function AddFile() {
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0)
 
-  let organizationName = "TGSConsulting";
+  let organizationName = "ETCMarine";
   let projectName = "Ariyal"
 
 

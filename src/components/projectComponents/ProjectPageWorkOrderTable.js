@@ -212,7 +212,7 @@ const EnhancedTableToolbar = (props) => {
       }}
     >
       <AddIcon
-        onClick={() => navigate(`/addWorkOrder/${projectId}`)}
+        onClick={() => navigate(`/${projectId}/addWorkOrder/`)}
         color="primary"
         sx={{
           "&:hover": {

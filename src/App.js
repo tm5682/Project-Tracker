@@ -50,46 +50,40 @@ const App = () => {
 
               <Route path="/registration" element={<RegistrationPage />} />
 
-              
+              <Route exact path="/" element={<PrivateRoute />}>
+                <Route path="document" element={<DocumentPage />} />
 
-<         Route exact path='/' element={<PrivateRoute/>}>
-             
-            <Route path="profile" element={<UpdateProfile />} />
+                <Route path="profile" element={<UpdateProfile />} />
 
-            <Route path=":userID/selectProject" element={<SelectProject />} />
+                <Route path="selectProject" element={<SelectProject />} />
 
-            <Route path=":userID/project/:projectId" element={<ProjectPage />} />
+                <Route path="project/:projectId" element={<ProjectPage />} />
 
-            <Route
-              path="/:projectId/addWorkOrder/"
-              element={<AddWorkOrder />}
-            />  
+                <Route
+                  path="/:projectId/addWorkOrder"
+                  element={<AddWorkOrder />}
+                />
 
-            <Route
-              path="/project/:projectId/:workOrderId"
-              element={<WorkOrderPage />}
-            />
+                <Route
+                  path="/project/:projectId/:workOrderId"
+                  element={<WorkOrderPage />}
+                />
 
-            <Route path="/userManagement/" element={<UserManagementPage />} />
+                <Route
+                  path="/userManagement/"
+                  element={<UserManagementPage />}
+                />
 
-             
-             
-            <Route
-              exact
-              path="/"
-              element={
-                <Container>
-                  <MainHomeView />
-                </Container>
-              }
-            />
-
-
-
-        </Route>
-
-
-
+                <Route
+                  exact
+                  path="/"
+                  element={
+                    <Container>
+                      <MainHomeView />
+                    </Container>
+                  }
+                />
+              </Route>
             </Routes>
           </Layout>
         </AuthProvider>

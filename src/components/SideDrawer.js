@@ -136,10 +136,10 @@ function SideDrawer() {
     {
       text: "Projects",
       icon: <ArticleIcon color="primary" />,
-      path: "/selectProject",
+      path: `/selectProject`,
     },
     {
-      text: "User Management",
+      text: "User Profile",
       icon: <PersonAddAltIcon color="primary" />,
       path: "/profile",
       items: [],
@@ -148,12 +148,6 @@ function SideDrawer() {
       text: "File Management",
       icon: <ChatIcon color="primary" />,
       path: "/document",
-      items: [],
-    },
-    {
-      text: "Chat",
-      icon: <ChatIcon color="primary" />,
-      path: "/chat",
       items: [],
     },
   ];
