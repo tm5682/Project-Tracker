@@ -39,8 +39,8 @@ const FilesView = () => {
     getFiles();
   }, []);
 
-  //collection reference for firebase connection to projectList
-  const collectionRef = collection(db,`Files/${organizationName}/${projectName}`);
+  //collection reference for firebase connection to projectList Leeway Marine/folders/
+  const collectionRef = collection(db,`folders`);
 
   //Fetch project data - calls firebase store and
   const fetchFiles = async () => {

@@ -18,7 +18,7 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { useAuth } from "../contexts/AuthContext";
 
 import { useNavigate } from "react-router-dom";
-import { is } from "date-fns/locale";
+
 
 const Login = () => {
   const { login, firebaseError } = useAuth();

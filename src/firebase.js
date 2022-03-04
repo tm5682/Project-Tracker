@@ -5,7 +5,7 @@ import { initializeApp } from "firebase/app";
 
 import { getFirestore } from "firebase/firestore";
 
-import { getAuth } from "firebase/auth"
+import { getAuth } from "firebase/auth";
 
 import {
   getStorage,
@@ -16,9 +16,11 @@ import {
 
 import {
   updateDoc,
+  query, where,
   serverTimestamp,
   collection,
   getDocs,
+  getDoc,
   setDoc,
   doc,
   deleteDoc,
@@ -50,13 +52,16 @@ const app = initializeApp(firebaseConfig);
 //represents db connection
 const db = getFirestore(app);
 
+
 const storage = getStorage(app);
 
-const auth = getAuth(app)
+const auth = getAuth(app);
 
 export {
   db,
   storage,
+  getDoc,
+  query, where,
   ref,
   uploadBytesResumable,
   getDownloadURL,
@@ -68,5 +73,5 @@ export {
   doc,
   deleteDoc,
   addDoc,
-  auth
+  auth,
 };
