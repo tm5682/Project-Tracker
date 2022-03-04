@@ -1,3 +1,4 @@
+import { QuerySnapshot } from "firebase/firestore";
 import { useEffect, useReducer } from "react";
 
 import {
@@ -6,6 +7,8 @@ import {
   getDocs,
   doc,
   getDoc,
+  query,
+  where,
   addDoc,
   serverTimestamp,
 } from "../../firebase";
@@ -13,6 +16,7 @@ import {
 const ACTIONS = {
   SELECT_FOLDER: "select-folder",
   UPDATE_FOLDER: "update-folder",
+  SET_CHILD_FOLDERS: "set-child-folders",
 };
 
 const ROOT_FOLDER = { name: "Root", id: null, path: [] };
@@ -32,6 +36,13 @@ function reducer(state, { type, payload }) {
         ...state,
         folder: payload.folder,
       };
+
+    case ACTIONS.SET_CHILD_FOLDERS:
+      return {
+        ...state,
+        childFolders: payload.childFolders,
+      };
+
     default:
       return state;
   }
@@ -50,8 +61,7 @@ export function useFolder(folderId = null, folder = null) {
   }, [folderId, folder]);
 
   useEffect(() => {
-
-    //if no folderId then we know its Root_Folder so we pass it 
+    //if no folderId then we know its Root_Folder so we pass it
     if (folderId == null) {
       return dispatch({
         type: ACTIONS.UPDATE_FOLDER,
@@ -59,34 +69,45 @@ export function useFolder(folderId = null, folder = null) {
       });
     }
 
-    //if folderId not null 
-    getDoc(doc(db, "folders", folderId)).then(docSnap => {
-        if (docSnap.exists()) {
+    //if folderId not null
+    getDoc(doc(db, "folders", folderId)).then((docSnap) => {
+      if (docSnap.exists()) {
+        console.log("Folder Data:", docSnap.data());
+        const formattedFolderData = {
+          id: docSnap.id,
+          ...docSnap.data(),
+        };
 
-          console.log("Folder Data:", docSnap.data());
-          const formattedFolderData =  {
-              id: docSnap.id,
-              ...docSnap.data()
-          }
+        dispatch({
+          type: ACTIONS.UPDATE_FOLDER,
+          payload: { folder: formattedFolderData },
+        });
+      } else {
+        dispatch({
+          type: ACTIONS.UPDATE_FOLDER,
+          payload: { folder: ROOT_FOLDER },
+        });
+      }
+    });
+  }, [folderId]);
 
-          dispatch({
-            type: ACTIONS.UPDATE_FOLDER,
-            payload: { folder: formattedFolderData },
-          });
 
+  //looks for child folders of the current location 
+  useEffect(() => {
+    let childFolders = [];
+    return getDocs(
+      query(collection(db, "folders"), where("parentId", "==", folderId))
+    ).then((snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        childFolders.push({ id: doc.id, ...doc.data() });
 
-        } else {
-
-            dispatch({
-                type: ACTIONS.UPDATE_FOLDER,
-                payload: { folder: ROOT_FOLDER },
-              });
-        }
-      })
-
-    
+        dispatch({
+          type: ACTIONS.SET_CHILD_FOLDERS,
+          payload: { childFolders: childFolders },
+        });
+      });
+    });
   }, [folderId]);
 
   return state;
- 
 }

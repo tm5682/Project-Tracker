@@ -1,9 +1,10 @@
 import React from 'react'
 
 function Folder( { folder }) {
+    console.log(folder.name)
   return (
     <div>
-        {folder.name}
+       Name of folder: {folder.name}
     </div>
   )
 }

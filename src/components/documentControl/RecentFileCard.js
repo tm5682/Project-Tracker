@@ -4,7 +4,7 @@ import './DocumentControl.css'
 
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 
-const RecentFileCard = ({name}) => {
+const RecentFileCard = ({folder}) => {
   return (
     <div className='fileCard'>
     <div className="fileCard--top">
@@ -12,7 +12,7 @@ const RecentFileCard = ({name}) => {
     </div>
 
     <div className="fileCard--bottom">
-        <p>{name}</p>
+        <p>{folder.name}</p>
     </div>
 </div>
   )

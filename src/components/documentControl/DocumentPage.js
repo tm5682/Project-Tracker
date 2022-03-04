@@ -6,17 +6,18 @@ import AddFolderButton from "./AddFolderButton";
 import {useFolder} from "../hooks/useFolder"
 
 import Folder from "./Folder";
+import RecentFileCard from "./RecentFileCard";
 
 
 
 function DocumentPage() {
 
 const { folder, childFolders} = useFolder("QNwTR6PaBV7Avsb3NTzq")
-console.log(folder)
+//console.log("childFolder data:", childFolders)
+console.log(childFolders instanceof Object)
 
 
-
-  return (
+  return (  
     <Box>
       <Box sx={{display:"flex"}}>
       <AddFile />
@@ -25,8 +26,9 @@ console.log(folder)
       {childFolders.length > 0 && (
         <Box>
           {childFolders.map( childFolder => (
-            <Box key={folder.id} sx={{ maxWidth: "250" }}> 
-              <Folder folder={childFolder} />
+            <Box key={childFolder.id} sx={{ maxWidth: "250" }}> 
+              {console.log(childFolder)}
+              <RecentFileCard key={childFolder.id} folder={childFolder} /> 
             </Box>
           ))}
         </Box>
@@ -34,7 +36,6 @@ console.log(folder)
 
       </Box>
 
-      <FilesView />
     </Box>
   );
 }
