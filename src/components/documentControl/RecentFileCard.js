@@ -1,21 +1,33 @@
+import React from "react";
+import "./DocumentControl.css";
 
-import React from 'react'
-import './DocumentControl.css'
+import FolderIcon from '@mui/icons-material/Folder';
+import { Typography } from "@mui/material";
+import { Box } from "@mui/system";
 
-import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-
-const RecentFileCard = ({folder}) => {
+const RecentFileCard = ({ folder }) => {
   return (
-    <div className='fileCard'>
-    <div className="fileCard--top">
-        <InsertDriveFileIcon color="primary" style={{ fontSize: 80 }} />
-    </div>
+    <>
+    <Box  sx={{
+                  "&:hover": {
+                    color: "red",
+                    bgcolor: "lightYellow",
+                  },
 
-    <div className="fileCard--bottom">
-        <p>{folder.name}</p>
-    </div>
-</div>
-  )
-}
+                  backgroundColor: "white",
+                }}>
+      <div className="fileCard">
+        <div className="fileCard--top">
+          <FolderIcon color="primary" style={{ fontSize: 50 }} />
+        </div>
 
-export default RecentFileCard
+        <div className="fileCard--bottom">
+         <Typography sx={{mt:1}}variant="body2"> {folder.name} </Typography>
+        </div>
+      </div>
+      </Box>
+    </>
+  );
+};
+
+export default RecentFileCard;

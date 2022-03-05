@@ -19,6 +19,27 @@ import { Box } from "@mui/system";
 
 import { db, collection, setDoc, addDoc, serverTimestamp } from "../../firebase";
 
+
+const addFileContainer = {
+    display: "Flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "6px 15px 6px 8px",
+    borderRadius: "50px",
+    boxShadow:
+      "0 1px 2px 0 rgba(60, 64, 67, 0.302), 0 1px 3px 1px rgba(60, 64, 67, 0.149)",
+    cursor: "pointer",
+  };
+
+  const addFile = {
+    display: "flex",
+    alignItems: "center",
+    paddingTop: 12,
+    paddingBottom: 12,
+    paddingLeft: 20,
+    padding: "12px 0",
+  };
+
 export default function AddFolderButton({currentFolder}) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
@@ -55,9 +76,13 @@ export default function AddFolderButton({currentFolder}) {
 
   return (
     <>
-      <Button onClick={openModal} variant="outline">
-        <CreateNewFolderIcon color="primary" />
-      </Button>
+         <Box sx={{ ...addFile, ml:5 }}>
+        <Box sx={{ ...addFileContainer }} onClick={openModal}>
+        <CreateNewFolderIcon color="primary" sx={{ fontSize: 20, mr:1.5 }}/>
+        <Typography> New Folder </Typography>
+      </Box>
+      </Box>
+ \
  
       <Modal
         open={open}

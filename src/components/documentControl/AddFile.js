@@ -166,7 +166,7 @@ function AddFile() {
   return (
     <Box sx={{ ...addFile }}>
       <Box sx={{ ...addFileContainer }} onClick={modalOpen}>
-        <AddIcon sx={{ mr: 1 }} />
+        <AddIcon sx={{ mr: 1 }} color="primary"/>
         <Typography> New File </Typography>
       </Box>
 

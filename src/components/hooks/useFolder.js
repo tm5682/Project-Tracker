@@ -72,7 +72,7 @@ export function useFolder(folderId = null, folder = null) {
     //if folderId not null
     getDoc(doc(db, "folders", folderId)).then((docSnap) => {
       if (docSnap.exists()) {
-        console.log("Folder Data:", docSnap.data());
+        //console.log("Folder Data:", docSnap.data());
         const formattedFolderData = {
           id: docSnap.id,
           ...docSnap.data(),
@@ -91,22 +91,22 @@ export function useFolder(folderId = null, folder = null) {
     });
   }, [folderId]);
 
-
-  //looks for child folders of the current location 
+  //looks for child folders of the current location
   useEffect(() => {
-    let childFolders = [];
-    return getDocs(
+    const cleanup = getDocs(
       query(collection(db, "folders"), where("parentId", "==", folderId))
     ).then((snapshot) => {
-      snapshot.docs.forEach((doc) => {
-        childFolders.push({ id: doc.id, ...doc.data() });
-
-        dispatch({
-          type: ACTIONS.SET_CHILD_FOLDERS,
-          payload: { childFolders: childFolders },
-        });
+      //console.log("New from useEffect:",childFolders)
+      dispatch({
+        type: ACTIONS.SET_CHILD_FOLDERS,
+        payload: {
+          childFolders: snapshot.docs.map((childFolder) => {
+            return { id: childFolder.id, ...childFolder.data() };
+          }),
+        },
       });
     });
+    return () => cleanup();
   }, [folderId]);
 
   return state;

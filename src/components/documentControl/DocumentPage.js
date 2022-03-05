@@ -3,39 +3,46 @@ import { Box } from "@mui/system";
 import AddFile from "./AddFile";
 import FilesView from "./FilesView";
 import AddFolderButton from "./AddFolderButton";
-import {useFolder} from "../hooks/useFolder"
+import { useFolder } from "../hooks/useFolder";
 
 import Folder from "./Folder";
-import RecentFileCard from "./RecentFileCard";
-
-
+import { Typography } from "@mui/material";
 
 function DocumentPage() {
+  const { folder, childFolders } = useFolder("QNwTR6PaBV7Avsb3NTzq");
+  //console.log("childFolder data:", childFolders)
+  console.log(childFolders);
 
-const { folder, childFolders} = useFolder("QNwTR6PaBV7Avsb3NTzq")
-//console.log("childFolder data:", childFolders)
-console.log(childFolders instanceof Object)
-
-
-  return (  
+  return (
     <Box>
-      <Box sx={{display:"flex"}}>
-      <AddFile />
-      <AddFolderButton currentFolder={folder}  />
-      
+      <Box sx={{ display: "flex", mb: 5 }}>
+        <AddFile />
+        <AddFolderButton currentFolder={folder} />
+      </Box>
+
+      <Typography
+        color="textSecondary"
+        sx={{  mb:2, display: "inline-block" }}
+        variant="h6"
+      >
+        Folders
+      </Typography>
+
       {childFolders.length > 0 && (
-        <Box>
-          {childFolders.map( childFolder => (
-            <Box key={childFolder.id} sx={{ maxWidth: "250" }}> 
-              {console.log(childFolder)}
-              <RecentFileCard key={childFolder.id} folder={childFolder} /> 
+        <Box sx={{mb:3}}>
+          {childFolders.map((childFolder) => (
+            <Box
+              key={childFolder.id}
+              sx={{ maxWidth: "200", display: "inline-flex" }}
+            >
+              {/* {console.log(childFolder)} */}
+              <Folder key={childFolder.id} folder={childFolder} />
             </Box>
           ))}
         </Box>
       )}
 
-      </Box>
-
+      <FilesView />
     </Box>
   );
 }

@@ -62,23 +62,9 @@ const FilesView = () => {
     return (
         <div className='fileView'>
 
-<Typography
-        color="textSecondary"
-        sx={{ mt:5, display: "inline-block" }}
-        variant="h6"
-        id="tableTitle"
-      >
-        Recent Files:
-      </Typography>
 
-            <div className="fileView__row">
-                {
-                    files.slice(0, 5).map(({ id, item }) => (
-                        <RecentFileCard key={id} name={item.name} />
-                    ))
 
-                }
-            </div>
+  
             <div className="fileView__titles">
                 <div className="fileView__titles--left">
                     <p>Name</p>
