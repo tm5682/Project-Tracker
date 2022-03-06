@@ -17,30 +17,37 @@ import {
 import { Box } from "@mui/system";
 //import { ROOT_FOLDER } from "../../hooks/useFolder"
 
-import { db, collection, setDoc, addDoc, serverTimestamp } from "../../firebase";
+import {
+  db,
+  collection,
+  setDoc,
+  addDoc,
+  serverTimestamp,
+} from "../../firebase";
 
+import { ROOT_FOLDER } from "../hooks/useFolder";
 
 const addFileContainer = {
-    display: "Flex",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: "6px 15px 6px 8px",
-    borderRadius: "50px",
-    boxShadow:
-      "0 1px 2px 0 rgba(60, 64, 67, 0.302), 0 1px 3px 1px rgba(60, 64, 67, 0.149)",
-    cursor: "pointer",
-  };
+  display: "Flex",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "6px 15px 6px 8px",
+  borderRadius: "50px",
+  boxShadow:
+    "0 1px 2px 0 rgba(60, 64, 67, 0.302), 0 1px 3px 1px rgba(60, 64, 67, 0.149)",
+  cursor: "pointer",
+};
 
-  const addFile = {
-    display: "flex",
-    alignItems: "center",
-    paddingTop: 12,
-    paddingBottom: 12,
-    paddingLeft: 20,
-    padding: "12px 0",
-  };
+const addFile = {
+  display: "flex",
+  alignItems: "center",
+  paddingTop: 12,
+  paddingBottom: 12,
+  paddingLeft: 20,
+  padding: "12px 0",
+};
 
-export default function AddFolderButton({currentFolder}) {
+export default function AddFolderButton({ currentFolder }) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const { currentUser } = useAuth();
@@ -56,19 +63,24 @@ export default function AddFolderButton({currentFolder}) {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (currentFolder == null) return
+    if (currentFolder == null) return;
+
+    const path = [...currentFolder.path];
+
+    if (currentFolder !== ROOT_FOLDER) {
+      path.push({ name: currentFolder.name, id: currentFolder.id });
+    }
 
     //create a folder in firebase
-    await addDoc(collection(db,`folders/`),  {
+    await addDoc(collection(db, `folders/`), {
       name: name,
-     parentId: currentFolder.id,
+      parentId: currentFolder.id,
       userId: currentUser.uid,
+      path: path,
       createdAt: serverTimestamp(),
     })
       .then(() => alert("Folder is created"))
       .catch((error) => alert("error: " + error));
-
-
 
     setName("");
     closeModal();
@@ -76,14 +88,13 @@ export default function AddFolderButton({currentFolder}) {
 
   return (
     <>
-         <Box sx={{ ...addFile, ml:5 }}>
+      <Box sx={{ ...addFile, ml: 5 }}>
         <Box sx={{ ...addFileContainer }} onClick={openModal}>
-        <CreateNewFolderIcon color="primary" sx={{ fontSize: 20, mr:1.5 }}/>
-        <Typography> New Folder </Typography>
+          <CreateNewFolderIcon color="primary" sx={{ fontSize: 20, mr: 1.5 }} />
+          <Typography> New Folder </Typography>
+        </Box>
       </Box>
-      </Box>
- \
- 
+      \
       <Modal
         open={open}
         onClose={closeModal}

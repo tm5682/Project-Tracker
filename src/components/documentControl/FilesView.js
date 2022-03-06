@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import FileItem from './FileItem'
-import RecentFileCard from './RecentFileCard'
+
 import './DocumentControl.css'
 
 import {
