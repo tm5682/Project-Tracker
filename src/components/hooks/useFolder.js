@@ -11,6 +11,7 @@ import {
   where,
   addDoc,
   serverTimestamp,
+  onSnapshot,
 } from "../../firebase";
 
 const ACTIONS = {
@@ -93,20 +94,18 @@ export function useFolder(folderId = null, folder = null) {
 
   //looks for child folders of the current location
   useEffect(() => {
-    const cleanup = getDocs(
-      query(collection(db, "folders"), where("parentId", "==", folderId))
-    ).then((snapshot) => {
-      //console.log("New from useEffect:",childFolders)
-      dispatch({
-        type: ACTIONS.SET_CHILD_FOLDERS,
-        payload: {
-          childFolders: snapshot.docs.map((childFolder) => {
-            return { id: childFolder.id, ...childFolder.data() };
-          }),
-        },
-      });
-    });
-    return () => cleanup();
+    const q =  query(collection(db, "folders"), where("parentId", "==", folderId))
+    return onSnapshot(q, (querySnapshot) => {
+        dispatch({
+          type: ACTIONS.SET_CHILD_FOLDERS,
+          payload: {
+            childFolders: querySnapshot.docs.map((childFolder) => {
+              return { id: childFolder.id, ...childFolder.data() };
+            }),
+          },
+        });
+      }
+    );
   }, [folderId]);
 
   return state;

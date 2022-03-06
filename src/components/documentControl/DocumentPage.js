@@ -8,8 +8,11 @@ import { useFolder } from "../hooks/useFolder";
 import Folder from "./Folder";
 import { Typography } from "@mui/material";
 
+import {useParams} from "react-router-dom"
+
 function DocumentPage() {
-  const { folder, childFolders } = useFolder("QNwTR6PaBV7Avsb3NTzq");
+  const { folderId } = useParams()
+  const { folder, childFolders } = useFolder(folderId);
   //console.log("childFolder data:", childFolders)
   console.log(childFolders);
 

@@ -11,7 +11,7 @@ export default function Folder({ folder }) {
   return (
     <Button
       to={{
-        pathname: `/folder/${folder.id}`,
+        pathname: `/folders/${folder.id}`,
         state: { folder: folder },
       }}
       variant="outlined"

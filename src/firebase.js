@@ -16,8 +16,10 @@ import {
 
 import {
   updateDoc,
-  query, where,
+  query,
+  where,
   serverTimestamp,
+  onSnapshot,
   collection,
   getDocs,
   getDoc,
@@ -52,7 +54,6 @@ const app = initializeApp(firebaseConfig);
 //represents db connection
 const db = getFirestore(app);
 
-
 const storage = getStorage(app);
 
 const auth = getAuth(app);
@@ -61,8 +62,10 @@ export {
   db,
   storage,
   getDoc,
-  query, where,
+  query,
+  where,
   ref,
+  onSnapshot,
   uploadBytesResumable,
   getDownloadURL,
   updateDoc,
