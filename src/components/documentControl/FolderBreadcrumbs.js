@@ -22,8 +22,8 @@ function FolderBreadcrumbs({ currentFolder }) {
             color="inherit"
             to={{
               pathname: folder.id ? `/folders/${folder.id}` : `/folders`,
-              state: { folder: { ...folder, path: path.slice(1, index) } }
             }}
+            state= {{ folder: { ...folder, path: path.slice(1, index) } }}
             as={RouterLink}
           >
 

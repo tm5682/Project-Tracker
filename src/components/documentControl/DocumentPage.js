@@ -16,11 +16,13 @@ function DocumentPage() {
   const { folderId } = useParams();
 
   //useLocation react router state 
-  const { state={}} = useLocation()
+  const { state= {}} = useLocation()
 
-  const { folder, childFolders } = useFolder(folderId, state);
+  console.log("State 1 is:", state)
+
+  const { folder, childFolders } = useFolder(folderId, state?.folder);
   
-  
+  console.log("Folder is:", folder)
   //console.log(childFolders);
 
   return (

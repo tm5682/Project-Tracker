@@ -58,6 +58,14 @@ export function useFolder(folderId = null, folder = null) {
   });
 
   useEffect(() => {
+
+    if (folder == null) {
+      return dispatch({
+        type: ACTIONS.SELECT_FOLDER,
+        payload: { folder: ROOT_FOLDER },
+      })
+    }
+
     dispatch({ type: ACTIONS.SELECT_FOLDER, payload: { folderId, folder } });
   }, [folderId, folder]);
 

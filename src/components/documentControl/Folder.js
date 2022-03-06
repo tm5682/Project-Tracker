@@ -11,9 +11,9 @@ export default function Folder({ folder }) {
   return (
     <Button
       to={{
-        pathname: `/folders/${folder.id}`,
-        state: { folder: folder },
+        pathname: `/folders/${folder.id}`
       }}
+      state={{ folder: folder }}
       variant="outlined"
       as={Link}
       sx={{ maxWidth: 200, minWidth:200, display:"inline-flex", mr:5, mb:4, alignSelf:"center", textDecoration: "none"}}
