@@ -22,6 +22,7 @@ import {
 import { useAuth } from "../contexts/AuthContext";
 
 import { useParams } from "react-router-dom";
+import { ROOT_FOLDER } from "../hooks/useFolder";
 
 //these functions represent css that will be used within add file component
 
@@ -60,12 +61,11 @@ function getModalStyle() {
   };
 }
 
-function AddFile() {
+function AddFile({ currentFolder }) {
+  //to grab route parameters
+  const { projectId } = useParams();
 
-   //to grab route parameters
-   const { projectId } = useParams();
-
-   const { currentUser } = useAuth();
+  const { currentUser } = useAuth();
 
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
@@ -74,15 +74,8 @@ function AddFile() {
   const [fileName, setFileName] = useState("");
   const [fileType, setFileType] = useState("");
 
-  const [downloadURL, setDownloadURL] = useState("");
-
   const [uploading, setUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0)
-
-  let organizationName = "ETCMarine";
-  let projectName = "Ariyal"
-
-
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   const modalOpen = () => {
     setOpen(true);
@@ -95,22 +88,25 @@ function AddFile() {
 
   const modalChange = async (e) => {
     if (e.target.files[0]) {
-      setFile(e.target.files[0])
-      setFileName(e.target.files[0].name)
-      setFileType(e.target.files[0].type)
-
+      setFile(e.target.files[0]);
+      setFileName(e.target.files[0].name);
+      setFileType(e.target.files[0].type);
     }
   };
 
+  const modalUpload = (e) => {
+    if (currentFolder == null || file == null) return;
 
-
-  const modalUpload = () => {
     setUploading(true);
 
-    const storageRef = ref(
-      storage,
-      `${organizationName}/${projectName}/${file.name}`
-    );
+    const filePath =
+      currentFolder === ROOT_FOLDER
+        ? `${fileName}`
+        : `${currentFolder.id}/${fileName}`;
+
+    console.log("filePath is:", filePath);
+
+    const storageRef = ref(storage, `Files/${filePath}`);
 
     const uploadTask = uploadBytesResumable(storageRef, file, file.type);
 
@@ -119,54 +115,40 @@ function AddFile() {
       (snapshot) => {
         let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setUploadProgress(progress);
-
       },
       (error) => {
         alert("error: file not uploaded");
         console.log(error);
       },
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then( async (downloadURL) => {
-         setDownloadURL(downloadURL)
+        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+          console.log(downloadURL)
+          await addDoc(collection(db, `files/`), {
+            folderId: currentFolder.id,
+            name: fileName,
+            file_type: fileType,
+            creation_date: serverTimestamp(),
+            url: downloadURL,
+            size: file.size,
+          })
+            .then(() => alert("File is posted"))
+            .catch((error) => alert("error: " + error));
+
+          setFile(null);
+          setFileType("");
+          setFileName("");
+          setUploading(false);
         });
       }
     );
 
-    //we pass orgName+projectName changed to string and without any space as collection Name
-    saveFileInfo()
-
     setOpen(false);
-  
   };
-
- 
-  const saveFileInfo = async () => {
-
-
-   await addDoc(collection(db, `Files/${organizationName}/${projectName}`), {
-      name: fileName,
-      file_type: fileType,
-      creation_date: serverTimestamp(),
-      url: downloadURL,
-      project_name: projectName,
-      org_name: organizationName,
-      size: file.size,
-    }).then(() => alert("File is posted"))
-    .catch((error) => alert("error: " + error));
-
-    setFile(null)
-    setFileType("")
-    setFileName("")
-    setUploading(false) 
-    setDownloadURL("") 
-
-  }
-
 
   return (
     <Box sx={{ ...addFile }}>
       <Box sx={{ ...addFileContainer }} onClick={modalOpen}>
-        <AddIcon sx={{ mr: 1 }} color="primary"/>
+        <AddIcon sx={{ mr: 1 }} color="primary" />
         <Typography> New File </Typography>
       </Box>
 
@@ -181,7 +163,7 @@ function AddFile() {
           style={modalStyle}
           sx={{
             ...paper,
-            backgroundColor: "secondary", 
+            backgroundColor: "white",
             boxShadow: 5,
             padding: 5,
           }}
@@ -197,17 +179,14 @@ function AddFile() {
           )}
         </Box>
       </Modal>
-     
 
-     { file &&
+      {file && (
         <Box sx={{ ml: 5 }}>
-        
-            <Typography component={"span"} variant={"body2"} fontWeight={600}>
+          <Typography component={"span"} variant={"body2"} fontWeight={600}>
             Uploading % : {uploadProgress}
           </Typography>
         </Box>
-      }
-
+      )}
     </Box>
   );
 }

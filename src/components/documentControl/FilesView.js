@@ -22,49 +22,12 @@ import {
 import { useParams } from "react-router-dom";
 import { Typography } from '@mui/material';
 
-const FilesView = () => {
-    const [files, setFiles] = useState([])
-
-      //to grab route parameters
-   const { projectId } = useParams();
-   let organizationName = "ETCMarine"
-   let projectName = "Matrix"
-
-    //useEffect - we use this to fetch data beforehand and populate state
-  useEffect(() => {
-    const getFiles = async () => {
-      const filesFromServer = await fetchFiles();
-      setFiles(filesFromServer);
-    };
-    getFiles();
-  }, []);
-
-  //collection reference for firebase connection to projectList Leeway Marine/folders/
-  const collectionRef = collection(db,`folders`);
-
-  //Fetch project data - calls firebase store and
-  const fetchFiles = async () => {
-    let filesList = [];
-    await getDocs(collectionRef)
-      .then((snapshot) => {
-        snapshot.docs.forEach((doc) => {
-          filesList.push({ id: doc.id, item: doc.data() });
-        });
-      })
-      //error catch
-      .catch((err) => {
-        console.log(err.message);
-      });
-     
-    return filesList;
-  };
+const FilesView = ({files}) => {
+  
 
     return (
         <div className='fileView'>
 
-
-
-  
             <div className="fileView__titles">
                 <div className="fileView__titles--left">
                     <p>Name</p>
@@ -75,8 +38,8 @@ const FilesView = () => {
                 </div>
             </div>
             {
-                files.map(({ id, item }) => (
-                    <FileItem key={id} id={id} name={item.name} timestamp={item.creation_date} fileUrl={item.url} size={item.size} />
+                files.map((file) => (
+                    <FileItem key={file.id} id={file.id} name={file.name} timestamp={file.creation_date} fileUrl={file.url} size={file.size} />
                 ))
             }
         </div>

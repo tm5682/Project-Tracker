@@ -18,6 +18,7 @@ const ACTIONS = {
   SELECT_FOLDER: "select-folder",
   UPDATE_FOLDER: "update-folder",
   SET_CHILD_FOLDERS: "set-child-folders",
+  SET_CHILD_FILES: "set-child-files",
 };
 
 export const ROOT_FOLDER = { name: "Root", id: null, path: [] };
@@ -44,6 +45,13 @@ function reducer(state, { type, payload }) {
         childFolders: payload.childFolders,
       };
 
+      case ACTIONS.SET_CHILD_FILES:
+        return {
+          ...state,
+          childFiles: payload.childFiles,
+        };
+  
+
     default:
       return state;
   }
@@ -63,7 +71,7 @@ export function useFolder(folderId = null, folder = null) {
       return dispatch({
         type: ACTIONS.SELECT_FOLDER,
         payload: { folder: ROOT_FOLDER },
-      })
+      })  
     }
 
     dispatch({ type: ACTIONS.SELECT_FOLDER, payload: { folderId, folder } });
@@ -109,6 +117,22 @@ export function useFolder(folderId = null, folder = null) {
           payload: {
             childFolders: querySnapshot.docs.map((childFolder) => {
               return { id: childFolder.id, ...childFolder.data() };
+            }),
+          },
+        });
+      }
+    );
+  }, [folderId]);
+
+   //looks for child files of the current location
+   useEffect(() => {
+    const q =  query(collection(db, "files"), where("folderId", "==", folderId))
+    return onSnapshot(q, (querySnapshot) => {
+        dispatch({
+          type: ACTIONS.SET_CHILD_FILES,
+          payload: {
+            childFiles: querySnapshot.docs.map((childFile) => {
+              return { id: childFile.id, ...childFile.data() };
             }),
           },
         });

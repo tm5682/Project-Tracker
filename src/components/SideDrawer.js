@@ -147,7 +147,7 @@ function SideDrawer() {
     {
       text: "File Management",
       icon: <ChatIcon color="primary" />,
-      path: "/document",
+      path: "/folders",
       items: [],
     },
   ];

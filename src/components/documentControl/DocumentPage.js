@@ -20,7 +20,7 @@ function DocumentPage() {
 
   console.log("State 1 is:", state)
 
-  const { folder, childFolders } = useFolder(folderId, state?.folder);
+  const { folder, childFolders, childFiles } = useFolder(folderId, state?.folder);
   
   console.log("Folder is:", folder)
   //console.log(childFolders);
@@ -30,7 +30,7 @@ function DocumentPage() {
        <FolderBreadcrumbs sx={{display:"inline-flex"}} currentFolder={folder} />
       <Box sx={{ display: "flex", mb: 5 }}>
 
-        <AddFile />
+        <AddFile currentFolder={folder}  />
         <AddFolderButton currentFolder={folder} />
       </Box>
 
@@ -56,7 +56,8 @@ function DocumentPage() {
         </Box>
       )}
 
-      <FilesView />
+            {console.log("childFiles are:", childFiles)}
+      <FilesView files = {childFiles} />
     </Box>
   );
 }

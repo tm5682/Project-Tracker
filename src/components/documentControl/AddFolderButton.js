@@ -6,6 +6,7 @@ import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 import { useAuth } from "../contexts/AuthContext";
 import {
   Button,
+  ButtonGroup,
   FormControl,
   Input,
   InputAdornment,
@@ -47,7 +48,25 @@ const addFile = {
   padding: "12px 0",
 };
 
+const paper = {
+  position: "absolute",
+  width: 400,
+  border: "2px solid #000",
+
+};
+
+//function for modal
+function getModalStyle() {
+  return {
+    top: `50%`,
+    left: `50%`,
+    transform: `translate(-50%, -50%)`,
+  };
+}
+
 export default function AddFolderButton({ currentFolder }) {
+  const [modalStyle] = useState(getModalStyle);
+
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const { currentUser } = useAuth();
@@ -94,14 +113,21 @@ export default function AddFolderButton({ currentFolder }) {
           <Typography> New Folder </Typography>
         </Box>
       </Box>
-      \
       <Modal
         open={open}
         onClose={closeModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box>
+        <Box
+          style={modalStyle}
+          sx={{
+            ...paper,
+            backgroundColor: "white",
+            boxShadow: 5,
+            padding: 5,
+          }}
+        >
           <form onSubmit={handleSubmit}>
             <FormControl>
               <Typography id="modal-modal-title" variant="h6" component="h2">
@@ -122,12 +148,15 @@ export default function AddFolderButton({ currentFolder }) {
               />
             </FormControl>
 
-            <Button variant="secondary" onClick={closeModal}>
-              Close
-            </Button>
+
+            <ButtonGroup>
             <Button variant="success" type="submit">
               Add Folder
             </Button>
+            <Button variant="secondary" onClick={closeModal}>
+              Close
+            </Button>
+            </ButtonGroup>
           </form>
         </Box>
       </Modal>
